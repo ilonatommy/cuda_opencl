@@ -1,0 +1,7 @@
+08:37:12 **** Clean-only build of configuration Debug for project lab_01 ****
+make clean 
+rm -rf  ./src/deviceQuery.o  ./src/deviceQuery.d  lab_01
+ 
+
+08:37:12 Build Finished (took 93ms)
+
