@@ -1,0 +1,25 @@
+==38540== NVPROF is profiling process 38540, command: ./vec_add
+[Vector addition of 33554432 elements]
+Copy input data from the host memory to the CUDA device
+CUDA kernel launch with 131072 blocks of 256 threads
+Copy output data from the CUDA device to the host memory
+Test PASSED
+Done
+==38540== Profiling application: ./vec_add
+==38540== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   53.90%  71.177ms         1  71.177ms  71.177ms  71.177ms  [CUDA memcpy DtoH]
+                   42.00%  55.462ms         2  27.731ms  27.102ms  28.360ms  [CUDA memcpy HtoD]
+                    4.11%  5.4239ms         1  5.4239ms  5.4239ms  5.4239ms  vectorAdd(float const *, float const *, float*, int)
+      API calls:   71.47%  359.94ms         3  119.98ms  481.35us  358.97ms  cudaMalloc
+                   26.55%  133.71ms         3  44.570ms  27.327ms  77.781ms  cudaMemcpy
+                    1.78%  8.9451ms         3  2.9817ms  646.66us  4.8121ms  cudaFree
+                    0.09%  476.74us         1  476.74us  476.74us  476.74us  cuDeviceTotalMem
+                    0.06%  323.29us        96  3.3670us     838ns  116.08us  cuDeviceGetAttribute
+                    0.03%  135.14us         1  135.14us  135.14us  135.14us  cudaLaunchKernel
+                    0.01%  39.600us         1  39.600us  39.600us  39.600us  cuDeviceGetName
+                    0.00%  11.663us         1  11.663us  11.663us  11.663us  cuDeviceGetPCIBusId
+                    0.00%  4.1210us         3  1.3730us     908ns  1.7460us  cuDeviceGetCount
+                    0.00%  4.1210us         1  4.1210us  4.1210us  4.1210us  cudaGetLastError
+                    0.00%  2.4450us         2  1.2220us     908ns  1.5370us  cuDeviceGet
+                    0.00%  1.5370us         1  1.5370us  1.5370us  1.5370us  cuDeviceGetUuid

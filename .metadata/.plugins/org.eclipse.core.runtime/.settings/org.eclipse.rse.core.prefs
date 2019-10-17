@@ -1,2 +1,3 @@
 eclipse.preferences.version=1
 org.eclipse.rse.systemtype.local.systemType.defaultUserId=cuda-s01
+useridperkey=lhcbgpu1.Local\=cuda-s01;

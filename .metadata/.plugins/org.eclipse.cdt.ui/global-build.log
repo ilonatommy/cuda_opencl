@@ -89,3 +89,572 @@ Invoking: NVCC Linker
 /usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
 Finished building target: vec_add
  
+08:13:01 **** Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+../src/vectorAdd.cu(138): error: a host function call cannot be configured
+
+1 error detected in the compilation of "/tmp/tmpxft_00004b0e_00000000-6_vectorAdd.cpp1.ii".
+make: *** [src/vectorAdd.o] Error 1
+08:16:14 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:16:18 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+make: Nothing to be done for `all'.
+08:16:42 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+make: Nothing to be done for `all'.
+08:17:33 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+../src/vectorAdd.cu(143): error: a __global__ function call must be configured
+
+1 error detected in the compilation of "/tmp/tmpxft_00005624_00000000-6_vectorAdd.cpp1.ii".
+make: *** [src/vectorAdd.o] Error 1
+08:18:49 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:19:33 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:19:42 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:19:50 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:20:03 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:20:13 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:21:16 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:21:32 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+../src/vectorAdd.cu(60): warning: shift count is too large
+
+../src/vectorAdd.cu(60): warning: shift count is too large
+
+../src/vectorAdd.cu: In function ‘int main()’:
+../src/vectorAdd.cu:60:29: warning: left shift count >= width of type [enabled by default]
+     int numElements = 50000 << 100;
+                             ^
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:21:44 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+../src/vectorAdd.cu(60): warning: shift count is too large
+
+../src/vectorAdd.cu(60): warning: shift count is too large
+
+../src/vectorAdd.cu: In function ‘int main()’:
+../src/vectorAdd.cu:60:29: warning: left shift count >= width of type [enabled by default]
+     int numElements = 50000 << 50;
+                             ^
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:21:53 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:22:17 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:22:35 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:22:57 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:23:50 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+../src/vectorAdd.cu(60): warning: shift count is too large
+
+../src/vectorAdd.cu(60): warning: shift count is too large
+
+../src/vectorAdd.cu: In function ‘int main()’:
+../src/vectorAdd.cu:60:25: warning: left shift count >= width of type [enabled by default]
+     int numElements = 2 << 50;
+                         ^
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:23:57 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:24:09 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+../src/vectorAdd.cu(60): warning: shift count is too large
+
+../src/vectorAdd.cu(60): warning: shift count is too large
+
+../src/vectorAdd.cu: In function ‘int main()’:
+../src/vectorAdd.cu:60:25: warning: left shift count >= width of type [enabled by default]
+     int numElements = 2 << 35;
+                         ^
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:24:17 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:24:27 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:24:44 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:25:03 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:25:14 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+make: Nothing to be done for `all'.
+08:36:44 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:37:36 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:39:46 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:40:13 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:45:38 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:47:03 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:48:24 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:48:49 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:49:47 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:50:32 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:50:40 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:50:48 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+08:51:55 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+09:10:05 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+09:11:25 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+09:17:55 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+../src/vectorAdd.cu(186): error: identifier "h_A" is undefined
+
+../src/vectorAdd.cu(186): error: identifier "h_B" is undefined
+
+../src/vectorAdd.cu(186): error: identifier "h_C" is undefined
+
+3 errors detected in the compilation of "/tmp/tmpxft_00001bda_00000000-6_vectorAdd.cpp1.ii".
+make: *** [src/vectorAdd.o] Error 1
+09:18:23 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
+09:19:00 **** Incremental Build of configuration Debug for project vec_add ****
+make all 
+Building file: ../src/vectorAdd.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "src" -M -o "src/vectorAdd.d" "../src/vectorAdd.cu"
+/usr/local/cuda-10.0/bin/nvcc -I"/usr/local/cuda-10.0/samples/0_Simple" -I"/usr/local/cuda-10.0/samples/common/inc" -I"/home/cuda-s01/mycuda/vec_add" -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "src/vectorAdd.o" "../src/vectorAdd.cu"
+Finished building: ../src/vectorAdd.cu
+ 
+Building target: vec_add
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "vec_add"  ./src/vectorAdd.o   
+Finished building target: vec_add
+ 
