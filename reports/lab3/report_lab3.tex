@@ -1,0 +1,46 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage[british,UKenglish,USenglish,english,american]{babel}
+\usepackage{tocbibind}
+\usepackage[toc,page]{appendix}
+
+%--------------dodatkowe pakiety:-----------
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{array}
+
+%-------------------links------------------
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+ 
+\urlstyle{same}
+%------placing image caption at the bottom---------
+\usepackage{floatrow}
+%--------------allows pic alligning----------------
+\usepackage[export]{adjustbox}
+%-----------------------------------------------------
+\begin{document}
+
+\title{Introduction to CUDA and OpenCL}
+\author{Ilona Tomkowicz, tu też 😃!}
+
+\maketitle
+\tableofcontents
+\newpage
+%--------------------------------------------------------------------
+
+\section{Data structure limits} 
+\subsection{How large data are handled successfully} 
+\subsection{What is going on in this experiment}
+\subsection{When does the code gives errors?}
+\section{Optimal grid layout search} 
+\subsection{Layout experiments}
+\subsection{Conclusions}
+\end{document}
