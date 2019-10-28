@@ -1,0 +1,20 @@
+echo " Welcome on: " $HOSTNAME " machine "
+echo ${USER}
+
+echo " --> Setting up Cuda 10.0 toolkit environment "
+
+export PATH=/usr/local/cuda-10.0/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64\
+       ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
+echo " --> Local configuration -- "
+echo " -> GPU "
+lspci | grep -i nvidia
+echo " -> OS "
+uname -m && cat /etc/*release
+echo " -> Compiler "
+gcc --version
+echo " -> Driver version "
+cat /proc/driver/nvidia/version
+
+
