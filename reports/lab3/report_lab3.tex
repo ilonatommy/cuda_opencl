@@ -25,11 +25,13 @@
 \usepackage{floatrow}
 %--------------allows pic alligning----------------
 \usepackage[export]{adjustbox}
-%-----------------------------------------------------
+%----------------for console output-----------------
+\usepackage{listings}
+
 \begin{document}
 
 \title{Introduction to CUDA and OpenCL}
-\author{Ilona Tomkowicz, tu też 😃!}
+\author{Ilona Tomkowicz, Zofia Pieńkowska}
 
 \maketitle
 \tableofcontents
@@ -37,6 +39,20 @@
 %--------------------------------------------------------------------
 
 \section{Data structure limits} 
+The biggest data structure that could be used in sample vector add project was 2 pow 27.
+\noindent Console output:
+\begin{lstlisting}[language=bash]
+  $ ./executable
+  [Vector addition of 268435456 elements]
+  Copy input data from the host memory to the CUDA device
+  CUDA kernel launch with 262144 blocks of 1024 threads
+  Copy output data from the CUDA device to the host memory
+  Test PASSED
+  Done
+\end{lstlisting}
+
+
+
 \subsection{How large data are handled successfully} 
 \subsection{What is going on in this experiment}
 \subsection{When does the code gives errors?}
