@@ -58,7 +58,7 @@ main(void)
     //DATA STRUCTURE HOST:
     // Print the vector length to be used, and compute its size
     //set size to 2^24:
-    int numElements = 2 << 24;
+    int numElements = 2 << 20;
     size_t size = numElements * sizeof(float);
     printf("[Vector addition of %d elements]\n", numElements);
 

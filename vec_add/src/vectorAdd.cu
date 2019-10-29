@@ -57,12 +57,10 @@ main(void)
 
     //DATA STRUCTURE HOST:
     // Print the vector length to be used, and compute its size
-    //set size to 2^24:
-    int numElements = 2 << 24;
+    int numElements = 2 << 27;
     size_t size = numElements * sizeof(float);
     printf("[Vector addition of %d elements]\n", numElements);
 
-    /*
     // Allocate the host input vector A
     float *h_A = (float *)malloc(size);
 
@@ -85,14 +83,11 @@ main(void)
         h_A[i] = rand()/(float)RAND_MAX;
         h_B[i] = rand()/(float)RAND_MAX;
     }
-    */
 
     //DATA STRUCTURE DEVICE:
-    //now it's managed memory allocation (both device and host have access to it)
     // Allocate the device input vector A
     float *d_A = NULL;
-    //replace cudaMalloc with cudaMallocManaged
-    err = cudaMallocManaged((void **)&d_A, size);
+    err = cudaMalloc((void **)&d_A, size);
 
     if (err != cudaSuccess)
     {
@@ -102,8 +97,7 @@ main(void)
 
     // Allocate the device input vector B
     float *d_B = NULL;
-    //replace cudaMalloc with cudaMallocManaged
-    err = cudaMallocManaged((void **)&d_B, size);
+    err = cudaMalloc((void **)&d_B, size);
 
     if (err != cudaSuccess)
     {
@@ -113,8 +107,7 @@ main(void)
 
     // Allocate the device output vector C
     float *d_C = NULL;
-    //replace cudaMalloc with cudaMallocManaged
-    err = cudaMallocManaged((void **)&d_C, size);
+    err = cudaMalloc((void **)&d_C, size);
 
     if (err != cudaSuccess)
     {
@@ -122,9 +115,6 @@ main(void)
         exit(EXIT_FAILURE);
     }
 
-
-    //using managed memory we do not have the need to copy objects to the device
-    /*
     // Copy the host input vectors A and B in host memory to the device input vectors in
     // device memory
     printf("Copy input data from the host memory to the CUDA device\n");
@@ -143,15 +133,11 @@ main(void)
         fprintf(stderr, "Failed to copy vector B from host to device (error code %s)!\n", cudaGetErrorString(err));
         exit(EXIT_FAILURE);
     }
-    */
 
     //DEFINING GRID LAYOUT:
     // Launch the Vector Add CUDA Kernel
-    // make grid size 1x1:
-
-    //choose 5 configs of grid:
-    int threadsPerBlock = 32 << 2; //max: 1024
-    int blocksPerGrid = (numElements + threadsPerBlock - 1) / threadsPerBlock;
+    int threadsPerBlock = 1024;
+    int blocksPerGrid =(numElements + threadsPerBlock - 1) / threadsPerBlock;
     printf("CUDA kernel launch with %d blocks of %d threads\n", blocksPerGrid, threadsPerBlock);
     vectorAdd<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_B, d_C, numElements);
     //if we use kernel as a normal function then we get an error:
@@ -166,8 +152,6 @@ main(void)
         exit(EXIT_FAILURE);
     }
 
-    //using managed memory we do not have the need to copy objects to the device
-    /*
     // Copy the device result vector in device memory to the host result vector
     // in host memory.
     printf("Copy output data from the CUDA device to the host memory\n");
@@ -188,17 +172,6 @@ main(void)
             exit(EXIT_FAILURE);
         }
     }
-    */
-
-    // Verify that the result vector in managed memory is correct
-    for (int i = 0; i < numElements; ++i)
-    {
-    	if (fabs(d_A[i] + d_B[i] - d_C[i]) > 1e-5)
-    	{
-    		fprintf(stderr, "Result verification failed at element %d!\n", i);
-        	exit(EXIT_FAILURE);
-    	}
-	}
 
     printf("Test PASSED\n");
 
@@ -227,12 +200,10 @@ main(void)
         exit(EXIT_FAILURE);
     }
 
-    /*
     // Free host memory
     free(h_A);
     free(h_B);
     free(h_C);
-    */
 
     printf("Done\n");
     return 0;
