@@ -1,0 +1,18 @@
+08:47:09 **** Build of configuration Debug for project matrix_mult_1 ****
+make all 
+Building file: ../main.cu
+Invoking: NVCC Compiler
+/usr/local/cuda-10.0/bin/nvcc -G -g -O0 -gencode arch=compute_61,code=sm_61  -odir "." -M -o "main.d" "../main.cu"
+/usr/local/cuda-10.0/bin/nvcc -G -g -O0 --compile --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61  -x cu -o  "main.o" "../main.cu"
+Finished building: ../main.cu
+ 
+Building target: matrix_mult_1
+Invoking: NVCC Linker
+/usr/local/cuda-10.0/bin/nvcc --cudart static --relocatable-device-code=false -gencode arch=compute_61,code=compute_61 -gencode arch=compute_61,code=sm_61 -link -o  "matrix_mult_1"  ./main.o   
+/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o: In function `_start':
+(.text+0x20): undefined reference to `main'
+collect2: error: ld returned 1 exit status
+make: *** [matrix_mult_1] Error 1
+
+08:47:10 Build Finished (took 1s.178ms)
+
