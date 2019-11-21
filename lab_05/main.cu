@@ -20,13 +20,24 @@ __global__ void MatrixMulKernel(float* M, float* N, float* P, int Width) {
 	}
 }
 
+void PrintMatrix(float* M, int Width)
+{
+	for(int i = 0; i < Width; i++)
+	{
+		for(int j = 0; j < Width; j++)
+			printf("%f  ",M[i*Width+j]);
+		printf("\n");
+	}
+	printf("\n");
+}
+
 int main(void)
 {
 	printf("Starting the program:\n");
 	cudaError_t err = cudaSuccess;
 
-	int matrix_size = 2;
-    int num_of_elements = matrix_size * matrix_size;
+	int matrix_size = 3;
+    	int num_of_elements = matrix_size * matrix_size;
 	size_t size = num_of_elements * sizeof(float);
 	printf("matrix [%d x %d] multiplication.\n", matrix_size, matrix_size);
     
@@ -60,7 +71,7 @@ int main(void)
 	//allocate matrixes on the device:
 	printf("Started variables allocation for the device.\n");
     printf("First matrix.\n");
-	float **M_d;
+	float *M_d;
 	err = cudaMalloc((void**)&M_d,  size);
 	if(err != cudaSuccess)
 	{
@@ -69,17 +80,17 @@ int main(void)
 	} else printf("Allocation successful.\n");
     
     printf("Second matrix.\n");
-	float **N_h;
-	err = cudaMalloc((void**)&N_h,  size);
+	float *N_d;
+	err = cudaMalloc((void**)&N_d,  size);
 	if(err != cudaSuccess)
 	{
-		printf(stderr, "Failed to allocate host matrix!\n");
+		fprintf(stderr, "Failed to allocate host matrix!\n");
 		exit(EXIT_FAILURE);
 	} else printf("Allocation successful.\n");
 	
 	printf("Third matrix.\n");
-	float **P_h;
-	err = cudaMalloc((void**)&P_h,  size);
+	float *P_d;
+	err = cudaMalloc((void**)&P_d,  size);
 	if(err != cudaSuccess)
 	{
 		fprintf(stderr, "Failed to allocate host matrix!\n");
@@ -98,7 +109,6 @@ int main(void)
 	} else printf("Copying successful.\n");
     
     printf("Second matrix.\n");
-	float **N_h;
 	err = cudaMemcpy(N_d, N_h, size, cudaMemcpyHostToDevice);
 	if(err != cudaSuccess)
 	{
@@ -106,8 +116,8 @@ int main(void)
 		exit(EXIT_FAILURE);
 	} else printf("Copying successful.\n");
 	
-    int threadsPerBlock = 256;
-    int blocksPerGrid = (num_of_elements + threadsPerBlock - 1) / threadsPerBlock;
+    int threadsPerBlock = 32;
+    int blocksPerGrid = 32 * num_of_elements;
     printf("Kernel started: %d blocks, %d threads.\n", blocksPerGrid, threadsPerBlock);
 	MatrixMulKernel <<<blocksPerGrid, threadsPerBlock>>>(M_d, N_d, P_d, matrix_size);
     err = cudaGetLastError();
@@ -127,14 +137,27 @@ int main(void)
 	} else printf("Copying successful.\n");
     
     //==========================TEST===============================================
-    for(int i = 0; i < num_of_elements; i++)
-	{
-        if(fabs(M_h[i] * N_h[i] - P_h[i] > 1e-3)
-        {
-            fprintf(stderr, "Verification tests failed!\n");
-            exit(EXIT_FAILURE);
-        } 
-	} 
-	else printf("Test PASSED\n");
+	PrintMatrix(M_h, matrix_size);
+	PrintMatrix(N_h, matrix_size);
+	PrintMatrix(P_h, matrix_size);	
 
+	for(int i = 0; i < matrix_size; i++)
+	{
+		for(int j = 0; j < matrix_size; j++)
+		{
+			float tmp = 0;
+			for(int k = 0; k < matrix_size; k++)
+				tmp += M_h[i*matrix_size + k] * N_h[k*matrix_size + j];
+			printf("%f ",tmp);
+			if(fabs(tmp - P_h[i*matrix_size + j] > 1e-3))
+			{
+				fprintf(stderr, "Verification test failed.!\nElement at index (%d, %d) should be %f, but is %f. \n",
+					i,j,P_h[i*matrix_size + j],tmp);
+				exit(EXIT_FAILURE);
+			}
+		}
+    	}
+
+	printf("Test PASSED\n");
+	
 }
