@@ -1,0 +1,8 @@
+ 
+kompilacja:
+
+nvcc -o my_executable_name_i_make_up_now cuda_file_i_just_wrote.cu
+
+odpalenie:
+
+nvprof ./my_executable_name
