@@ -44,22 +44,21 @@ __global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Wid
 	if(Row < Width && Col < Width)
 	{	
 		P[Row * Width + Col]  = Pval;
-		printf("(%d,%d)=%f\n",Row,Col,P[Row*Width+Col]);
+		//printf("(%d,%d)=%f\n",Row,Col,P[Row*Width+Col]);
 	}
-	else P[Row * Width + Col] = 99.9;
+	
 
 }
 
 void matrixMultiplication(float *M, float *N, float *P, int Width){
 
     // declare the number of blocks per grid and the number of threads per block
-    int th = Width;
-    int bl = 1;
-    dim3 threadsPerBlock(th,th);
-    dim3 blocksPerGrid(bl,bl);
-    printf("Kernel started: %d blocks, %d threads.\n", bl, th);
+    int th = TILE_WIDTH;
+    int bl = (Width/TILE_WIDTH) + 1;
+    dim3 threadsPerBlock(th,th,1);
+    dim3 blocksPerGrid(bl,bl,1);
+    printf("Kernel started: (%d,%d,1) grid, (%d,%d,1) blocks.\n", bl,bl, th,th);
     matrixMultiplicationKernel<<<blocksPerGrid,threadsPerBlock>>>(M, N, P, Width);
-    printf("%f%", P[0]);
 }
 
 void PrintMatrix(float* M, int Width)
@@ -78,7 +77,7 @@ int main(void)
 	printf("Starting the program:\n");
 	cudaError_t err = cudaSuccess;
 
-	int matrix_size = 2;
+	int matrix_size = 8;
     	int num_of_elements = matrix_size * matrix_size;
 	size_t size = num_of_elements * sizeof(float);
 	printf("matrix [%d x %d] multiplication.\n", matrix_size, matrix_size);
@@ -145,8 +144,9 @@ int main(void)
 			float tmp = 0;
 			for(int k = 0; k < matrix_size; k++)
 				tmp += M[i*matrix_size + k] * N[k*matrix_size + j];
-			printf("%f ",tmp);
-			if(fabs(tmp - P[i*matrix_size + j]) > 1)
+			//debug line:
+			//printf("%f ",tmp);
+			if(fabs(tmp - P[i*matrix_size + j]) > 1e-3)
 			{
 				fprintf(stderr, "Verification test failed.!\nElement at index (%d, %d) should be %f, but is %f. \n",
 					i,j,tmp,P[i*matrix_size + j]);
