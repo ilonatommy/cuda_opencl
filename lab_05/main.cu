@@ -23,15 +23,8 @@ __global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Wid
 void matrixMultiplication(float *M, float *N, float *P, int Width){
 
     // declare the number of blocks per grid and the number of threads per block
-    // use 1 to 512 threads per block
-    dim3 threadsPerBlock(NWidth, Width);
-    dim3 blocksPerGrid(1, 1);
-        if (Width*Width > 512){
-            threadsPerBlock.x = 512;
-            threadsPerBlock.y = 512;
-            blocksPerGrid.x = ceil(double(Width)/double(threadsPerBlock.x));
-            blocksPerGrid.y = ceil(double(Width)/double(threadsPerBlock.y));
-        }
+    int threadsPerBlock = Width*Width;
+    int blocksPerGrid = Width*Width;
     printf("Kernel started: %d blocks, %d threads.\n", blocksPerGrid, threadsPerBlock);
     matrixMultiplicationKernel<<<blocksPerGrid,threadsPerBlock>>>(M, N, P, Width);
 }
@@ -209,3 +202,4 @@ int main(void)
     return 0;    
 	
 }
+
