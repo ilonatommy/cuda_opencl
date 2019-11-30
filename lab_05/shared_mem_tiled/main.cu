@@ -6,39 +6,47 @@
  *      Author: cuda-s01
  */
 #include <stdio.h>
+
+const int TILE_WIDTH = 2;
+
 __global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Width) {
-	const int tile_width = 1;
 	// Calculate the row index of the P element and M
-	int Row = blockIdx.y*tile_width+threadIdx.y;
+	int Row = blockIdx.y*blockDim.y+threadIdx.y;
 	// Calculate the column index of P and N
-	int Col = blockIdx.x*tile_width+threadIdx.x;
+	int Col = blockIdx.x*blockDim.x+threadIdx.x;
 	
-	__shared__ float sum_M[tile_width][tile_width];
-	__shared__ float sum_N[tile_width][tile_width];
+	__shared__ float sum_M[TILE_WIDTH][TILE_WIDTH];
+	__shared__ float sum_N[TILE_WIDTH][TILE_WIDTH];
+	
+	sum_M[threadIdx.y][threadIdx.x]=0.0;
+	sum_N[threadIdx.y][threadIdx.x]=0.0;
 
 	float Pval = 0;
-	for(int k=0; k<(tile_width + Width - 1)/tile_width; k++)
+	for(int k=0; k<((Width - 1)/TILE_WIDTH + 1); k++)
 	{
 		//printf("Col:%d, Row:%d, k:%d, th:(%d,%d), ");
-		if(k*tile_width + threadIdx.x < Width && Row < Width)
-			sum_M[threadIdx.y][threadIdx.x] = M[Row*Width + k*tile_width + threadIdx.x];
+		if(k*TILE_WIDTH + threadIdx.x < Width && Row < Width)
+			sum_M[threadIdx.y][threadIdx.x] = M[Row*Width + k*TILE_WIDTH + threadIdx.x];
 		else sum_M[threadIdx.y][threadIdx.x] = 0.0;
 		
-		if(k*tile_width + threadIdx.y < Width && Col < Width)
-			sum_N[threadIdx.y][threadIdx.x] = N[(k*tile_width + threadIdx.y)*Width + Col];
+		if(k*TILE_WIDTH + threadIdx.y < Width && Col < Width)
+			sum_N[threadIdx.y][threadIdx.x] = N[(k*TILE_WIDTH + threadIdx.y)*Width + Col];
 		else sum_N[threadIdx.y][threadIdx.x] = 0.0;
 
 		__syncthreads();
 
-		for(int n=0; n<tile_width;n++)
+		for(int n=0; n<TILE_WIDTH;++n)
 			Pval += sum_M[threadIdx.y][n] * sum_N[n][threadIdx.x];
 
 		__syncthreads();
 
 	}
 	if(Row < Width && Col < Width)
-		P[((blockIdx.y * blockDim.y + threadIdx.y) * Width) +
-		(blockIdx.x * blockDim.x) + threadIdx.x] = Pval;
+	{	
+		P[Row * Width + Col]  = Pval;
+		printf("(%d,%d)=%f\n",Row,Col,P[Row*Width+Col]);
+	}
+	else P[Row * Width + Col] = 99.9;
 
 }
 
@@ -51,6 +59,7 @@ void matrixMultiplication(float *M, float *N, float *P, int Width){
     dim3 blocksPerGrid(bl,bl);
     printf("Kernel started: %d blocks, %d threads.\n", bl, th);
     matrixMultiplicationKernel<<<blocksPerGrid,threadsPerBlock>>>(M, N, P, Width);
+    printf("%f%", P[0]);
 }
 
 void PrintMatrix(float* M, int Width)
