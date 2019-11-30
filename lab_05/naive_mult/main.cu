@@ -10,7 +10,8 @@ __global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Wid
 	int Row = blockIdx.y*blockDim.y+threadIdx.y;
 	// Calculate the column index of P and N
 	int Col = blockIdx.x*blockDim.x+threadIdx.x;
-	printf("Row:%d, Col:%d. BlockIdx(%d,%d), blockDim(%d,%d) threadIdx(%d,%d)\n\n",Row,Col,blockIdx.x,blockIdx.y,blockDim.x,blockDim.y,threadIdx.x,threadIdx.y);
+	//debug line:
+	//printf("Row:%d, Col:%d. BlockIdx(%d,%d), blockDim(%d,%d) threadIdx(%d,%d)\n\n",Row,Col,blockIdx.x,blockIdx.y,blockDim.x,blockDim.y,threadIdx.x,threadIdx.y);
 	if ((Row < Width) && (Col < Width)) {
 		float Pvalue = 0;
 		// each thread computes one element of the block sub-matrix
@@ -25,8 +26,8 @@ __global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Wid
 void matrixMultiplication(float *M, float *N, float *P, int Width){
 
     // declare the number of blocks per grid and the number of threads per block
-    int th = 3;
-    int bl = 3;
+    int th = Width;
+    int bl = 1;
     dim3 threadsPerBlock(th,th);
     dim3 blocksPerGrid(bl,bl);
     printf("Kernel started: %d blocks, %d threads.\n", bl, th);
@@ -49,7 +50,7 @@ int main(void)
 	printf("Starting the program:\n");
 	cudaError_t err = cudaSuccess;
 
-	int matrix_size = 3;
+	int matrix_size = 10;
     	int num_of_elements = matrix_size * matrix_size;
 	size_t size = num_of_elements * sizeof(float);
 	printf("matrix [%d x %d] multiplication.\n", matrix_size, matrix_size);
@@ -159,7 +160,8 @@ int main(void)
 			float tmp = 0;
 			for(int k = 0; k < matrix_size; k++)
 				tmp += M_h[i*matrix_size + k] * N_h[k*matrix_size + j];
-			printf("%f ",tmp);
+			//debug line:
+			//printf("%f ",tmp);
 			if(fabs(tmp - P_h[i*matrix_size + j]) > 1e-3)
 			{
 				fprintf(stderr, "Verification test failed.!\nElement at index (%d, %d) should be %f, but is %f. \n",
