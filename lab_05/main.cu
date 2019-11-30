@@ -10,6 +10,7 @@ __global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Wid
 	int Row = blockIdx.y*blockDim.y+threadIdx.y;
 	// Calculate the column index of P and N
 	int Col = blockIdx.x*blockDim.x+threadIdx.x;
+	printf("Row:%d, Col:%d. BlockIdx(%d,%d), blockDim(%d,%d) threadIdx(%d,%d)\n\n",Row,Col,blockIdx.x,blockIdx.y,blockDim.x,blockDim.y,threadIdx.x,threadIdx.y);
 	if ((Row < Width) && (Col < Width)) {
 		float Pvalue = 0;
 		// each thread computes one element of the block sub-matrix
@@ -18,14 +19,17 @@ __global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Wid
 		}
 		P[Row*Width+Col] = Pvalue;
 	}
+	else P[Row*Width+Col] =  99.9;
 }
 
 void matrixMultiplication(float *M, float *N, float *P, int Width){
 
     // declare the number of blocks per grid and the number of threads per block
-    int threadsPerBlock = Width*Width;
-    int blocksPerGrid = Width*Width;
-    printf("Kernel started: %d blocks, %d threads.\n", blocksPerGrid, threadsPerBlock);
+    int th = 3;
+    int bl = 3;
+    dim3 threadsPerBlock(th,th);
+    dim3 blocksPerGrid(bl,bl);
+    printf("Kernel started: %d blocks, %d threads.\n", bl, th);
     matrixMultiplicationKernel<<<blocksPerGrid,threadsPerBlock>>>(M, N, P, Width);
 }
 
@@ -156,10 +160,10 @@ int main(void)
 			for(int k = 0; k < matrix_size; k++)
 				tmp += M_h[i*matrix_size + k] * N_h[k*matrix_size + j];
 			printf("%f ",tmp);
-			if(fabs(tmp - P_h[i*matrix_size + j] > 1e-3))
+			if(fabs(tmp - P_h[i*matrix_size + j]) > 1e-3)
 			{
 				fprintf(stderr, "Verification test failed.!\nElement at index (%d, %d) should be %f, but is %f. \n",
-					i,j,P_h[i*matrix_size + j],tmp);
+					i,j,tmp,P_h[i*matrix_size + j]);
 				exit(EXIT_FAILURE);
 			}
 		}

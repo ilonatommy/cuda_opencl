@@ -11,14 +11,34 @@ __global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Wid
 	int Row = blockIdx.y*blockDim.y+threadIdx.y;
 	// Calculate the column index of P and N
 	int Col = blockIdx.x*blockDim.x+threadIdx.x;
-	if ((Row < Width) && (Col < Width)) {
-		float Pvalue = 0;
-		// each thread computes one element of the block sub-matrix
-		for (int k = 0; k < Width; ++k) {
-			Pvalue += M[Row*Width+k]*N[k*Width+Col];
-		}
-		P[Row*Width+Col] = Pvalue;
+	const int tile_width = 2;
+	__shared__ float sum_M[tile_width][tile_width];
+	__shared__ float sum_N[tile_width][tile_width];
+
+	float Pval = 0;
+
+	for(int k=0; k<(tile_width + Width + 1)/tile_width; k++)
+	{
+		if(k*tile_width + threadIdx.x < Width && Row < Width)
+			sum_M[threadIdx.y][threadIdx.x] = M[Row*Width + k*tile_width + threadIdx.x];
+		else sum_M[threadIdx.y][threadIdx.x] = 0.0;
+		
+		if(k*tile_width + threadIdx.y < Width && Col < Width)
+			sum_N[threadIdx.y][threadIdx.x] = N[(k*tile_width + threadIdx.y)*Width + Col];
+		else sum_M[threadIdx.y][threadIdx.x] = 0.0;
+
+		__syncthreads();
+
+		for(int n=0; n<tile_width;n++)
+			Pval += sum_M[threadIdx.y][n] * sum_N[n][threadIdx.x];
+
+		__syncthreads();
+
 	}
+	if(Row < Width && Col < Width)
+		P[((blockIdx.y * blockDim.y + threadIdx.y) * Width) +
+		(blockIdx.x * blockDim.x) + threadIdx.x] = Pval;
+
 }
 
 void matrixMultiplication(float *M, float *N, float *P, int Width){
@@ -46,7 +66,7 @@ int main(void)
 	printf("Starting the program:\n");
 	cudaError_t err = cudaSuccess;
 
-	int matrix_size = 3;
+	int matrix_size = 4;
     	int num_of_elements = matrix_size * matrix_size;
 	size_t size = num_of_elements * sizeof(float);
 	printf("matrix [%d x %d] multiplication.\n", matrix_size, matrix_size);
