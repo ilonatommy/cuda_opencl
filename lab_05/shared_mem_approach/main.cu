@@ -81,9 +81,16 @@ int main(void)
 		exit(EXIT_FAILURE);
 	} else printf("Allocation successful.\n");
 
+	//initialisation:
+	for(int i=0; i<num_of_elements; i++)
+	{
+	  M[i] = rand()/(float)RAND_MAX;
+	  N[i] = rand()/(float)RAND_MAX;
+	}
+	printf("Initialisation finished.\n");
     
     //calculations:
-    matrixMultiplication(M_d, N_d, P_d, matrix_size);
+    matrixMultiplication(M, N, P, matrix_size);
     err = cudaGetLastError();
     
     if(err != cudaSuccess)
@@ -94,9 +101,9 @@ int main(void)
     
     
     //==========================TEST===============================================
-	PrintMatrix(M_h, matrix_size);
-	PrintMatrix(N_h, matrix_size);
-	PrintMatrix(P_h, matrix_size);	
+	PrintMatrix(M, matrix_size);
+	PrintMatrix(N, matrix_size);
+	PrintMatrix(P, matrix_size);	
 
 	for(int i = 0; i < matrix_size; i++)
 	{
@@ -109,7 +116,7 @@ int main(void)
 			if(fabs(tmp - P[i*matrix_size + j] > 1e-3))
 			{
 				fprintf(stderr, "Verification test failed.!\nElement at index (%d, %d) should be %f, but is %f. \n",
-					i,j,P[i*matrix_size + j],tmp);
+					i,j,tmp,P[i*matrix_size + j]);
 				exit(EXIT_FAILURE);
 			}
 		}
