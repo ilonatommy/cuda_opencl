@@ -7,25 +7,26 @@
  */
 #include <stdio.h>
 __global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Width) {
+	const int tile_width = 1;
 	// Calculate the row index of the P element and M
-	int Row = blockIdx.y*blockDim.y+threadIdx.y;
+	int Row = blockIdx.y*tile_width+threadIdx.y;
 	// Calculate the column index of P and N
-	int Col = blockIdx.x*blockDim.x+threadIdx.x;
-	const int tile_width = 2;
+	int Col = blockIdx.x*tile_width+threadIdx.x;
+	
 	__shared__ float sum_M[tile_width][tile_width];
 	__shared__ float sum_N[tile_width][tile_width];
 
 	float Pval = 0;
-
-	for(int k=0; k<(tile_width + Width + 1)/tile_width; k++)
+	for(int k=0; k<(tile_width + Width - 1)/tile_width; k++)
 	{
+		//printf("Col:%d, Row:%d, k:%d, th:(%d,%d), ");
 		if(k*tile_width + threadIdx.x < Width && Row < Width)
 			sum_M[threadIdx.y][threadIdx.x] = M[Row*Width + k*tile_width + threadIdx.x];
 		else sum_M[threadIdx.y][threadIdx.x] = 0.0;
 		
 		if(k*tile_width + threadIdx.y < Width && Col < Width)
 			sum_N[threadIdx.y][threadIdx.x] = N[(k*tile_width + threadIdx.y)*Width + Col];
-		else sum_M[threadIdx.y][threadIdx.x] = 0.0;
+		else sum_N[threadIdx.y][threadIdx.x] = 0.0;
 
 		__syncthreads();
 
@@ -44,9 +45,11 @@ __global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Wid
 void matrixMultiplication(float *M, float *N, float *P, int Width){
 
     // declare the number of blocks per grid and the number of threads per block
-    int threadsPerBlock = Width*Width;
-    int blocksPerGrid = Width*Width;
-    printf("Kernel started: %d blocks, %d threads.\n", blocksPerGrid, threadsPerBlock);
+    int th = Width;
+    int bl = 1;
+    dim3 threadsPerBlock(th,th);
+    dim3 blocksPerGrid(bl,bl);
+    printf("Kernel started: %d blocks, %d threads.\n", bl, th);
     matrixMultiplicationKernel<<<blocksPerGrid,threadsPerBlock>>>(M, N, P, Width);
 }
 
@@ -66,7 +69,7 @@ int main(void)
 	printf("Starting the program:\n");
 	cudaError_t err = cudaSuccess;
 
-	int matrix_size = 4;
+	int matrix_size = 2;
     	int num_of_elements = matrix_size * matrix_size;
 	size_t size = num_of_elements * sizeof(float);
 	printf("matrix [%d x %d] multiplication.\n", matrix_size, matrix_size);
@@ -134,7 +137,7 @@ int main(void)
 			for(int k = 0; k < matrix_size; k++)
 				tmp += M[i*matrix_size + k] * N[k*matrix_size + j];
 			printf("%f ",tmp);
-			if(fabs(tmp - P[i*matrix_size + j] > 1e-3))
+			if(fabs(tmp - P[i*matrix_size + j]) > 1)
 			{
 				fprintf(stderr, "Verification test failed.!\nElement at index (%d, %d) should be %f, but is %f. \n",
 					i,j,tmp,P[i*matrix_size + j]);
