@@ -5,7 +5,7 @@
  *      Author: cuda-s01
  */
 #include <stdio.h>
-__global__ void MatrixMulKernel(float* M, float* N, float* P, int Width) {
+__global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Width) {
 	// Calculate the row index of the P element and M
 	int Row = blockIdx.y*blockDim.y+threadIdx.y;
 	// Calculate the column index of P and N
@@ -18,6 +18,22 @@ __global__ void MatrixMulKernel(float* M, float* N, float* P, int Width) {
 		}
 		P[Row*Width+Col] = Pvalue;
 	}
+}
+
+void matrixMultiplication(float *M, float *N, float *P, int Width){
+
+    // declare the number of blocks per grid and the number of threads per block
+    // use 1 to 512 threads per block
+    dim3 threadsPerBlock(NWidth, Width);
+    dim3 blocksPerGrid(1, 1);
+        if (Width*Width > 512){
+            threadsPerBlock.x = 512;
+            threadsPerBlock.y = 512;
+            blocksPerGrid.x = ceil(double(Width)/double(threadsPerBlock.x));
+            blocksPerGrid.y = ceil(double(Width)/double(threadsPerBlock.y));
+        }
+    printf("Kernel started: %d blocks, %d threads.\n", blocksPerGrid, threadsPerBlock);
+    matrixMultiplicationKernel<<<blocksPerGrid,threadsPerBlock>>>(M, N, P, Width);
 }
 
 void PrintMatrix(float* M, int Width)
@@ -116,10 +132,8 @@ int main(void)
 		exit(EXIT_FAILURE);
 	} else printf("Copying successful.\n");
 	
-    int threadsPerBlock = 32;
-    int blocksPerGrid = 32 * num_of_elements;
-    printf("Kernel started: %d blocks, %d threads.\n", blocksPerGrid, threadsPerBlock);
-	MatrixMulKernel <<<blocksPerGrid, threadsPerBlock>>>(M_d, N_d, P_d, matrix_size);
+    //calculations:
+    matrixMultiplication(M_d, N_d, P_d, matrix_size);
     err = cudaGetLastError();
     
     if(err != cudaSuccess)
@@ -159,5 +173,39 @@ int main(void)
     	}
 
 	printf("Test PASSED\n");
+    
+    // Free device global memory
+    err = cudaFree(M_d);
+
+    if (err != cudaSuccess)
+    {
+        fprintf(stderr, "Failed to free device matrix M (error code %s)!\n", cudaGetErrorString(err));
+        exit(EXIT_FAILURE);
+    }
+
+    err = cudaFree(N_d);
+
+    if (err != cudaSuccess)
+    {
+        fprintf(stderr, "Failed to free device matrix N (error code %s)!\n", cudaGetErrorString(err));
+        exit(EXIT_FAILURE);
+    }
+
+    err = cudaFree(P_d);
+
+    if (err != cudaSuccess)
+    {
+        fprintf(stderr, "Failed to free device matrix P (error code %s)!\n", cudaGetErrorString(err));
+        exit(EXIT_FAILURE);
+    }
+
+    
+    // Free host memory
+    free(M_h);
+    free(N_h);
+    free(P_h);
+    
+    printf("Done\n");
+    return 0;    
 	
 }
