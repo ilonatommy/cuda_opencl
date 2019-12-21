@@ -62,6 +62,7 @@ int main()
   //cudaMemPrefetchAsync(b, size, deviceId);
   //cudaMemPrefetchAsync(c, size, deviceId);
 
+
   size_t threadsPerBlock;
   size_t numberOfBlocks;
 
