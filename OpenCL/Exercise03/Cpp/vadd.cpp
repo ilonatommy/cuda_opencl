@@ -25,6 +25,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <string>
+#include <cmath>
 
 #include <iostream>
 #include <fstream>
@@ -37,7 +38,7 @@
 //------------------------------------------------------------------------------
 
 #define TOL    (0.001)   // tolerance used in floating point comparisons
-#define LENGTH (2<<25)    // length of vectors a, b, and c
+#define LENGTH (pow(2, 28))    // length of vectors a, b, and c
 
 int main(void)
 {

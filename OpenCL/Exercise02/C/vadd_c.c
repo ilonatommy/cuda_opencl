@@ -14,6 +14,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <sys/types.h>
 #ifdef __APPLE__
 #include <OpenCL/opencl.h>
@@ -37,8 +38,8 @@ extern int output_device_info(cl_device_id );
 
 //------------------------------------------------------------------------------
 
-#define TOL    (0.001)   // tolerance used in floating point comparisons
-#define LENGTH (2<<29)    // length of vectors a, b, and c
+#define TOL    (0.001)   // tolerance used in floating point comparisons - because float computations are not perfect
+#define LENGTH (pow(2, 29))    // hardcoded length of vectors a, b, and c, will be used later
 
 //------------------------------------------------------------------------------
 //
@@ -85,11 +86,11 @@ int main(int argc, char** argv)
     cl_program       program;       // compute program
     cl_kernel        ko_vadd;       // compute kernel
 
-    cl_mem d_a;                     // device memory used for the input  a vector
+    cl_mem d_a;                     // device memory used for the input  a vector. Naming convention d_ (device) helps us see it's a buffer rather than regular array
     cl_mem d_b;                     // device memory used for the input  b vector
     cl_mem d_c;                     // device memory used for the output c vector
 
-    // Fill vectors a and b with random float values
+    // Fill vectors a and b with random float values - executes on host
     int i = 0;
     int count = LENGTH;
     for(i = 0; i < count; i++){
@@ -159,6 +160,9 @@ int main(int argc, char** argv)
     // Create the compute kernel from the program
     ko_vadd = clCreateKernel(program, "vadd", &err);
     checkError(err, "Creating kernel");
+
+    // -------------- DEFININING OPENCL MEMORY OBJECTS ----------------
+    // There can be two kinds of them, buffers and images, but in the tutorial we only use buffers.
 
     // Create the input (a, b) and output (c) arrays in device memory
     d_a  = clCreateBuffer(context,  CL_MEM_READ_ONLY,  sizeof(float) * count, NULL, &err);

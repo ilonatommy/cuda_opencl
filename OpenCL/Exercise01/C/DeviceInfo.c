@@ -49,7 +49,6 @@ int main(void)
         err = clGetPlatformInfo(platform[i], CL_PLATFORM_NAME, sizeof(string), &string, NULL);
         checkError(err, "Getting platform name");
         printf("Platform: %s\n", string);
-	printf("Hello, OpenCL\n");
 
         // Print out the platform vendor
         err = clGetPlatformInfo(platform[i], CL_PLATFORM_VENDOR, sizeof(string), &string, NULL);

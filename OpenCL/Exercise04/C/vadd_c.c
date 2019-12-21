@@ -38,7 +38,7 @@ extern int output_device_info(cl_device_id );
 //------------------------------------------------------------------------------
 
 #define TOL    (0.001)   // tolerance used in floating point comparisons
-#define LENGTH (1024)    // length of vectors a, b, and c
+#define LENGTH (128)    // length of vectors a, b, and c
 
 //------------------------------------------------------------------------------
 //
@@ -71,9 +71,14 @@ int main(int argc, char** argv)
 {
     int          err;               // error code returned from OpenCL calls
 
-    float*       h_a = (float*) calloc(LENGTH, sizeof(float));       // a vector
-    float*       h_b = (float*) calloc(LENGTH, sizeof(float));       // b vector
-    float*       h_c = (float*) calloc(LENGTH, sizeof(float));       // c vector (a+b) returned from the compute device
+    float*       h_a = (float*) calloc(LENGTH, sizeof(float));       // a vector (random)
+    float*       h_b = (float*) calloc(LENGTH, sizeof(float));       // b vector (random)
+    float*       h_c = (float*) calloc(LENGTH, sizeof(float));       // c vector (a+b)
+    float*	 h_d = (float*) calloc(LENGTH, sizeof(float));       // d vector (c+e)
+    float*	 h_e = (float*) calloc(LENGTH, sizeof(float));       // e vector (random)
+    float*	 h_f = (float*) calloc(LENGTH, sizeof(float));       // f vector (d+g)
+    float*	 h_g = (float*) calloc(LENGTH, sizeof(float));       // g vector (random)
+
 
     unsigned int correct;           // number of correct results
 
@@ -85,17 +90,27 @@ int main(int argc, char** argv)
     cl_program       program;       // compute program
     cl_kernel        ko_vadd;       // compute kernel
 
-    cl_mem d_a;                     // device memory used for the input  a vector
-    cl_mem d_b;                     // device memory used for the input  b vector
-    cl_mem d_c;                     // device memory used for the output c vector
+    cl_mem d_a;                     // device memory used for a (input)
+    cl_mem d_b;                     // device memory used for b (input)
+    cl_mem d_c;                     // device memory used for c (output)
+    cl_mem d_d;                     // device memory used for d (output)
+    cl_mem d_e;                     // device memory used for e (input)
+    cl_mem d_f;                     // device memory used for f (output)
+    cl_mem d_g;                     // device memory used for g (input)
 
-    // Fill vectors a and b with random float values
+
+    // Fill vectors a, b, e and g with random float values
     int i = 0;
     int count = LENGTH;
     for(i = 0; i < count; i++){
         h_a[i] = rand() / (float)RAND_MAX;
         h_b[i] = rand() / (float)RAND_MAX;
+        h_e[i] = rand() / (float)RAND_MAX;
+        h_g[i] = rand() / (float)RAND_MAX;
     }
+
+// ------------------------ TUTAJ -----------------------------
+
 
     // Set up platform and GPU device
 
@@ -161,74 +176,99 @@ int main(int argc, char** argv)
     checkError(err, "Creating kernel");
 
     // Create the input (a, b) and output (c) arrays in device memory
-    d_a  = clCreateBuffer(context,  CL_MEM_READ_ONLY,  sizeof(float) * count, NULL, &err);
+    d_a  = clCreateBuffer(context,  CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(float) * count, h_a, &err);
     checkError(err, "Creating buffer d_a");
 
-    d_b  = clCreateBuffer(context,  CL_MEM_READ_ONLY,  sizeof(float) * count, NULL, &err);
+    d_b  = clCreateBuffer(context,  CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(float) * count, h_b, &err);
     checkError(err, "Creating buffer d_b");
 
-    d_c  = clCreateBuffer(context,  CL_MEM_WRITE_ONLY, sizeof(float) * count, NULL, &err);
+    d_c  = clCreateBuffer(context,  CL_MEM_READ_WRITE, sizeof(float) * count, NULL, &err);
     checkError(err, "Creating buffer d_c");
 
-    // Write a and b vectors into compute device memory
-    err = clEnqueueWriteBuffer(commands, d_a, CL_TRUE, 0, sizeof(float) * count, h_a, 0, NULL, NULL);
-    checkError(err, "Copying h_a to device at d_a");
+    d_d  = clCreateBuffer(context,  CL_MEM_READ_WRITE, sizeof(float) * count, NULL, &err);
+    checkError(err, "Creating buffer d_d");
 
-    err = clEnqueueWriteBuffer(commands, d_b, CL_TRUE, 0, sizeof(float) * count, h_b, 0, NULL, NULL);
-    checkError(err, "Copying h_b to device at d_b");
+    d_e  = clCreateBuffer(context,  CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(float) * count, h_e, &err);
+    checkError(err, "Creating buffer d_e");
 
-    // Set the arguments to our compute kernel
+    d_f  = clCreateBuffer(context,  CL_MEM_READ_WRITE, sizeof(float) * count, NULL, &err);
+    checkError(err, "Creating buffer d_f");
+
+    d_g  = clCreateBuffer(context,  CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, sizeof(float) * count, h_g, &err);
+    checkError(err, "Creating buffer d_g");
+
+
+
+
+    // Enqueue the kernel 1/3
+    // Setting the arguments to compute kernel
     err  = clSetKernelArg(ko_vadd, 0, sizeof(cl_mem), &d_a);
     err |= clSetKernelArg(ko_vadd, 1, sizeof(cl_mem), &d_b);
     err |= clSetKernelArg(ko_vadd, 2, sizeof(cl_mem), &d_c);
     err |= clSetKernelArg(ko_vadd, 3, sizeof(unsigned int), &count);
-    checkError(err, "Setting kernel arguments");
-
-    double rtime = wtime();
-
+    checkError(err, "Setting kernel arguments"); 
+	
     // Execute the kernel over the entire range of our 1d input data set
     // letting the OpenCL runtime choose the work-group size
     global = count;
     err = clEnqueueNDRangeKernel(commands, ko_vadd, 1, NULL, &global, NULL, 0, NULL, NULL);
-    checkError(err, "Enqueueing kernel");
+    checkError(err, "Enqueueing kernel (1/3)");
 
-    // Wait for the commands to complete before stopping the timer
-    err = clFinish(commands);
-    checkError(err, "Waiting for kernel to finish");
+    // Enqueue the kernel 2/3
+    // Set different arguments to our compute kernel
+    err  = clSetKernelArg(ko_vadd, 0, sizeof(cl_mem), &d_e);
+    err |= clSetKernelArg(ko_vadd, 1, sizeof(cl_mem), &d_c);
+    err |= clSetKernelArg(ko_vadd, 2, sizeof(cl_mem), &d_d);
+    checkError(err, "Setting kernel arguments");
+    
+    // Execute the kernel over the entire range of our 1d input data set
+    // letting the OpenCL runtime choose the work-group size
+    err = clEnqueueNDRangeKernel(commands, ko_vadd, 1, NULL, &global, NULL, 0, NULL, NULL);
+    checkError(err, "Enqueueing kernel (1/3)");
 
-    rtime = wtime() - rtime;
-    printf("\nThe kernel ran in %lf seconds\n",rtime);
+    // Enqueue the kernel 3/3
+    // Set different arguments to our compute kernel
+    err  = clSetKernelArg(ko_vadd, 0, sizeof(cl_mem), &d_g);
+    err |= clSetKernelArg(ko_vadd, 1, sizeof(cl_mem), &d_d);
+    err |= clSetKernelArg(ko_vadd, 2, sizeof(cl_mem), &d_f);
+    checkError(err, "Setting kernel arguments");
 
-    // Read back the results from the compute device
-    err = clEnqueueReadBuffer( commands, d_c, CL_TRUE, 0, sizeof(float) * count, h_c, 0, NULL, NULL );  
-    if (err != CL_SUCCESS)
-    {
-        printf("Error: Failed to read output array!\n%s\n", err_code(err));
-        exit(1);
+    err = clEnqueueNDRangeKernel(commands, ko_vadd, 1, NULL, &global, NULL, 0, NULL, NULL);
+    checkError(err, "Enqueueing kernel (3/3)");
+
+    // Read back the result from the compute device
+    err = clEnqueueReadBuffer( commands, d_f, CL_TRUE, 0, sizeof(float) * count, h_f, 0, NULL, NULL );  
+    if (err!=CL_SUCCESS) {
+	printf("Error: Failed to read output array!\n%s\n", err_code(err));
+	exit(1);
     }
-
+    
     // Test the results
     correct = 0;
     float tmp;
-
+    
     for(i = 0; i < count; i++)
     {
-        tmp = h_a[i] + h_b[i];     // assign element i of a+b to tmp
-        tmp -= h_c[i];             // compute deviation of expected and output result
-        if(tmp*tmp < TOL*TOL)        // correct if square deviation is less than tolerance squared
+        tmp = h_a[i] + h_b[i] + h_e[i] + h_g[i];     // assign element i of a+b+e+g to tmp
+        tmp -= h_f[i];                               // compute deviation of expected and output result
+        if(tmp*tmp < TOL*TOL)                        // correct if square deviation is less than tolerance squared
             correct++;
         else {
-            printf(" tmp %f h_a %f h_b %f h_c %f \n",tmp, h_a[i], h_b[i], h_c[i]);
+            printf(" tmp %f h_a %f h_b %f h_e %f h_g %f h_f %f\n",tmp, h_a[i], h_b[i], h_e[i], h_g[i], h_f[i]);
         }
     }
 
-    // summarise results
-    printf("C = A+B:  %d out of %d results were correct.\n", correct, count);
+    // summarize results
+    printf("C = A+B+E+G:  %d out of %d results were correct.\n", correct, count);
 
     // cleanup then shutdown
     clReleaseMemObject(d_a);
     clReleaseMemObject(d_b);
     clReleaseMemObject(d_c);
+    clReleaseMemObject(d_d);
+    clReleaseMemObject(d_e);
+    clReleaseMemObject(d_f);
+    clReleaseMemObject(d_g);
     clReleaseProgram(program);
     clReleaseKernel(ko_vadd);
     clReleaseCommandQueue(commands);
@@ -237,6 +277,10 @@ int main(int argc, char** argv)
     free(h_a);
     free(h_b);
     free(h_c);
+    free(h_d);
+    free(h_e);
+    free(h_f);
+    free(h_g);
 
     return 0;
 }
