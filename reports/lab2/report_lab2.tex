@@ -29,7 +29,8 @@
 \usepackage{floatrow}
 %--------------allows pic alligning----------------
 \usepackage[export]{adjustbox}
-%-----------------------------------------------------
+%---------------------plot3d--------------------------
+\usepackage{pgfplots}
 \begin{document}
 
 \title{Introduction to CUDA and OpenCL}
@@ -79,20 +80,40 @@ Experiments with performance were made using template vectorAdd. This template o
 \item veifies if the result is correct
 \item frees memory on both, device and host.
 \end{itemize} 
-Number of elements is changed for fixed gird layout and grid layout is changed for fixed number of elements.
+The thread size can change up to 1024, larger threads cannot be built and an error is thrown.
+
 \subsection{Computation time comparison}  \label{size_tests}
+
+For fixed vector size $2^{27}$ and changing grid layout, where blocks and threads size are in a relation with each other in following experiments (changing thread number changes blocks number). 
+\[ blocksPerGrid =  (vectorElemNumber + threadsPerBlock + 1) / threadsPerBlock \]
+
+\begin{tikzpicture}
+	\begin{axis}[grid=major,
+	title={Computation time performance on different grids},
+	xlabel={number of threads per block},
+	ylabel={number of blocks per grid},
+    zlabel={time [ms]},
+    xmin=0, xmax=1024,
+    ymin=0, ymax=268435456,
+	]
+	
+	\addplot3+[mesh,scatter] 
+		coordinates {
+(1,268435456,789) (16,16777217,222) (64,4194304,172) 
+(256,1048576,171) (1024,262144,172) (1024,262144,172) 
+};;
+	\end{axis}
+\end{tikzpicture}
+
+Choosing a size of grid with the largest number of threads and smallest number of blocks per grid the computation performance in relation to vector size was measured. The maximal vector possible to process in this layout was of size $2^{29}$. It can be seen that the worst configuration of grid for a large vector is one thread with a lot of blocks. Choosing any other configuration (from 64 threads up to 1024) have similiar timing.
 
 \begin{tikzpicture}
 \begin{axis}[
 	ymode=log,
 	xmode=log,
-    title={Vectors addition perormance},
-    xlabel={number elements/threads},
+    title={Computation performance of different vector lengths},
+    xlabel={vector length},
     ylabel={time [us]},
-    xmin=0, xmax=10000000,
-    ymin=0, ymax=820,
-    xtick={0,1000,10000,100000,1000000,10000000},
-    ytick={1,10,100,1000},
     legend pos=north west,
     ymajorgrids=true,
     grid style=dashed,
@@ -103,25 +124,58 @@ Number of elements is changed for fixed gird layout and grid layout is changed f
     mark=square,
     ]
     coordinates {
-    (500,0.896)(50000,10.976)(5000000,811.21)
+    (2,1)(2^5,1)(2^10,1)(2^15,159)(2^20,1779)(2^25,38813)(2^29,3347180)
     };
-    \addlegendentry{vector elements number}
-\addplot[
-    color=red,
-    mark=square,
-    ]
-    coordinates {
-    (64,10.912)(1024,11.040)
-    };
-    \addlegendentry{threads per block}
- 
+    \addlegendentry{vector elements number} 
 \end{axis}
 \end{tikzpicture}
 
-A huge difference can be seen when changing data size by two orders of magnitude, whereas changing number of threads from very small (64) to very big (1024) does not result in any major change in terms of time performance.
-
+A huge difference can be seen when changing data size when the size of vector is larger than the number of threads per block. When the size of vector exceeds the number of threads per block the difference of time starts to grow immediately. 
 
 \subsection{Data transfer time comparison} \label{data_transfer}
+
+Like in the previous experiment, first two plots present resuts for a fixed vector size $2^{27}$ and changing grid layout, where blocks and threads size are in a relation with each other in following experiments (changing thread number changes blocks number). 
+\[ blocksPerGrid =  (vectorElemNumber + threadsPerBlock + 1) / threadsPerBlock \]
+
+\begin{tikzpicture}
+	\begin{axis}[grid=major,
+	title={Host to device transfer perormance on different grids},
+	xlabel={number of threads per block},
+	ylabel={number of blocks per grid},
+    zlabel={time [ms]},
+    xmin=0, xmax=1024,
+    ymin=0, ymax=268435456,
+	]
+	
+	\addplot3+[mesh,scatter] 
+		coordinates {
+(1,268435456,664) (16,16777217,621) (64,4194304,655) 
+(256,1048576,559) (1024,262144,861) (1024,262144,861) 
+};;
+	\end{axis}
+\end{tikzpicture}
+
+We can observe the best performance for grids with a lot of blocks. Those, which have high number of threads send the data for around 50\% more time. 
+
+\begin{tikzpicture}
+	\begin{axis}[grid=major,
+	title={Device to host transfer perormance on different grids},
+	xlabel={number of threads per block},
+	ylabel={number of blocks per grid},
+    zlabel={time [ms]},
+    xmin=0, xmax=1024,
+    ymin=0, ymax=268435456,
+	]
+	
+	\addplot3+[mesh,scatter] 
+		coordinates {
+(1,268435456,471) (16,16777217,483) (64,4194304,470) 
+(256,1048576,441) (1024,262144,450) (1024,262144,450) 
+};;
+	\end{axis}
+\end{tikzpicture}
+
+In the back transfer we do not observe any major differences between blocks. They are so small, that the difference can be caused by a normal timing fluctuations observed when running the same code multiple times. Based on this experiment it can be concluded that the transfer from the device to host is not affected by the size of grid in any way.
 
 \begin{tikzpicture}
 \begin{axis}[
@@ -130,10 +184,6 @@ A huge difference can be seen when changing data size by two orders of magnitude
     title={Host to device transfer perormance},
     xlabel={number elements/threads},
     ylabel={time [us]},
-    xmin=0, xmax=10000000,
-    ymin=0, ymax=15236,
-    xtick={0,1000,10000,100000,1000000,10000000},
-    ytick={1,10,100,1000},
     legend pos=north west,
     ymajorgrids=true,
     grid style=dashed,
@@ -144,21 +194,11 @@ A huge difference can be seen when changing data size by two orders of magnitude
     mark=square,
     ]
     coordinates {
-    (500,2.5600)(50000,36.928)(5000000,15236)
+    (2,546)(2^5,537)(2^10,610)(2^15,781)(2^20,5524)(2^25,137710)(2^29,3347180)
     };
-    \addlegendentry{vector elements number}
-\addplot[
-    color=red,
-    mark=square,
-    ]
-    coordinates {
-    (64,37.313)(1024,36.513)
-    };
-    \addlegendentry{threads per block}
- 
+    \addlegendentry{vector elements number} 
 \end{axis}
 \end{tikzpicture}
-
 
 \begin{tikzpicture}
 \begin{axis}[
@@ -167,10 +207,6 @@ A huge difference can be seen when changing data size by two orders of magnitude
     title={Device to host transfer perormance},
     xlabel={number elements/threads},
     ylabel={time [us]},
-    xmin=0, xmax=10000000,
-    ymin=0, ymax=6587,
-    xtick={0,1000,10000,100000,1000000,10000000},
-    ytick={1,10,100,1000},
     legend pos=north west,
     ymajorgrids=true,
     grid style=dashed,
@@ -181,23 +217,16 @@ A huge difference can be seen when changing data size by two orders of magnitude
     mark=square,
     ]
     coordinates {
-    (500,1.6640)(50000,16.096)(5000000,6587)
+    (2,1)(2^5,1)(2^10,2)(2^15,21)(2^20,3634)(2^25,136930)(2^29,3670480)
     };
     \addlegendentry{vector elements number}
-\addplot[
-    color=red,
-    mark=square,
-    ]
-    coordinates {
-    (64,16.064)(1024,16.160)
-    };
-    \addlegendentry{threads per block}
- 
 \end{axis}
 \end{tikzpicture}
 
-Although transfer times differ for copying from and to the device, plots look like more or less the same for both operations.
+In the situation of transfering we can see a very similiar behaviour to the computation one. Until the number of elements do not exceed the size of threads per grid, the transfer time is nearly freezed.
 
-Generally, for all actions on which experiments were conucted the time change is smaller for low figures (for change from 500 to 50 000 - two orders of magnitude - time increased by c. one order of magnitude) and bigger for high figures (for change from 50 000 to 5 000 000 - also two orders - we gained c. two orders of magnitude). It indicates, that using GPU with large number of data transfered at the same time can be less beneficial than granulating this data into subsets and processing them in small portions in GPU. That is why we should try to form our computations in group of smaller calculations, but not too small to aviod too fequent and unnecessary data copying between host and device.
+Although transfer times differ for copying from and to the device, the shape of plots look like more or less the same for both operations.
+
+Generally, for all actions on which experiments were conucted, the time change is smaller for low figures  and bigger for high figures. It indicates, that using GPU with large number of data transfered at the same time can be less beneficial than granulating this data into subsets and processing them in small portions in GPU. That is why we should try to form our computations in group of smaller calculations, but not too small to aviod too fequent and unnecessary data copying between host and device.
 
 \end{document}
