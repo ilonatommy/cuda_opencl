@@ -23,6 +23,7 @@
 #include <cuda_runtime.h>
 
 //#include <helper_cuda.h>
+
 /**
  * CUDA Kernel Device code
  *
@@ -58,7 +59,7 @@ main(void)
 
     //DATA STRUCTURE HOST:
     // Print the vector length to be used, and compute its size
-    int numElements = 2<<29;
+    int numElements = 2<<24;
     size_t size = numElements * sizeof(float);
     printf("[Vector addition of %d elements]\n", numElements);
     // Allocate the host input vector A
@@ -80,11 +81,11 @@ main(void)
     // Initialize the host input vectors
     for (int i = 0; i < numElements; ++i)
     {
-        h_A[i] = rand()/(float)RAND_MAX;
-        h_B[i] = rand()/(float)RAND_MAX;
+        h_A[i] = 3;//rand()/(float)RAND_MAX;
+        h_B[i] = 4;//rand()/(float)RAND_MAX;
     }
 
-    //DATA STRUCTURE DEVICE:
+   //DATA STRUCTURE DEVICE:
     // Allocate the device input vector A
     float *d_A = NULL;
     err = cudaMallocManaged((void **)&d_A, size);
@@ -136,8 +137,8 @@ main(void)
 
     //DEFINING GRID LAYOUT:
     // Launch the Vector Add CUDA Kernel
-    int threadsPerBlock = 1024;
-    int blocksPerGrid =(numElements + threadsPerBlock - 1) / threadsPerBlock;
+    int threadsPerBlock = 256;// 1024;
+    int blocksPerGrid = 320; //(numElements + threadsPerBlock - 1) / threadsPerBlock;
     printf("CUDA kernel launch with %d blocks of %d threads\n", blocksPerGrid, threadsPerBlock);
     vectorAdd<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_B, d_C, numElements);
     //if we use kernel as a normal function then we get an error:
@@ -208,4 +209,3 @@ main(void)
     printf("Done\n");
     return 0;
 }
-
