@@ -1,0 +1,31 @@
+Copy input data from the host memory to the CUDA device
+CUDA kernel launch with 1048576 blocks of 256 threads
+Copy output data from the CUDA device to the host memory
+Test PASSED
+Done
+==13629== Profiling application: ./v2
+==13629== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   47.72%  559.55ms         2  279.78ms  273.96ms  285.59ms  [CUDA memcpy HtoD]
+                   37.64%  441.36ms         1  441.36ms  441.36ms  441.36ms  [CUDA memcpy DtoH]
+                   14.64%  171.69ms         1  171.69ms  171.69ms  171.69ms  vectorAdd(float const *, float const *, float*, int)
+      API calls:   72.00%  1.17557s         3  391.86ms  275.48ms  614.05ms  cudaMemcpy
+                   17.91%  292.43ms         3  97.478ms  23.047us  292.36ms  cudaMallocManaged
+                   10.02%  163.64ms         3  54.547ms  54.242ms  54.747ms  cudaFree
+                    0.03%  529.47us         1  529.47us  529.47us  529.47us  cuDeviceTotalMem
+                    0.02%  325.53us        96  3.3900us     838ns  109.09us  cuDeviceGetAttribute
+                    0.00%  72.495us         1  72.495us  72.495us  72.495us  cuDeviceGetName
+                    0.00%  64.254us         1  64.254us  64.254us  64.254us  cudaLaunchKernel
+                    0.00%  11.314us         1  11.314us  11.314us  11.314us  cuDeviceGetPCIBusId
+                    0.00%  4.8880us         3  1.6290us     978ns  2.7930us  cuDeviceGetCount
+                    0.00%  3.2820us         1  3.2820us  3.2820us  3.2820us  cudaGetLastError
+                    0.00%  3.0040us         2  1.5020us  1.0480us  1.9560us  cuDeviceGet
+                    0.00%  1.3270us         1  1.3270us  1.3270us  1.3270us  cuDeviceGetUuid
+
+==13629== Unified Memory profiling result:
+Device "GeForce GTX 1060 6GB (0)"
+   Count  Avg Size  Min Size  Max Size  Total Size  Total Time  Name
+   18432  170.67KB  4.0000KB  0.9961MB  3.000000GB  258.9703ms  Device To Host
+    8965         -         -         -           -  502.1677ms  Gpu page fault groups
+Total CPU Page faults: 9216
+ 

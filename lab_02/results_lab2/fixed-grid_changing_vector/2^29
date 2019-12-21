@@ -1,0 +1,32 @@
+ 
+Copy input data from the host memory to the CUDA device
+CUDA kernel launch with 1048576 blocks of 1024 threads
+Copy output data from the CUDA device to the host memory
+Test PASSED
+Done
+==22758== Profiling application: ./v2
+==22758== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   41.77%  5.03415s         1  5.03415s  5.03415s  5.03415s  vectorAdd(float const *, float const *, float*, int)
+                   30.46%  3.67048s         1  3.67048s  3.67048s  3.67048s  [CUDA memcpy DtoH]
+                   27.77%  3.34718s         2  1.67359s  1.31995s  2.02723s  [CUDA memcpy HtoD]
+      API calls:   93.11%  12.0559s         3  4.01864s  1.32137s  8.70606s  cudaMemcpy
+                    4.62%  598.10ms         3  199.37ms  187.99ms  208.26ms  cudaFree
+                    2.26%  291.99ms         3  97.331ms  23.047us  291.87ms  cudaMallocManaged
+                    0.01%  974.78us        96  10.153us     838ns  491.54us  cuDeviceGetAttribute
+                    0.00%  500.76us         1  500.76us  500.76us  500.76us  cuDeviceTotalMem
+                    0.00%  45.677us         1  45.677us  45.677us  45.677us  cuDeviceGetName
+                    0.00%  37.505us         1  37.505us  37.505us  37.505us  cudaLaunchKernel
+                    0.00%  11.035us         1  11.035us  11.035us  11.035us  cuDeviceGetPCIBusId
+                    0.00%  5.0990us         3  1.6990us     978ns  2.8640us  cuDeviceGetCount
+                    0.00%  2.7940us         2  1.3970us  1.0480us  1.7460us  cuDeviceGet
+                    0.00%  2.5840us         1  2.5840us  2.5840us  2.5840us  cudaGetLastError
+                    0.00%  1.3960us         1  1.3960us  1.3960us  1.3960us  cuDeviceGetUuid
+
+==22758== Unified Memory profiling result:
+Device "GeForce GTX 1060 6GB (0)"
+   Count  Avg Size  Min Size  Max Size  Total Size  Total Time  Name
+  151167  63.973KB  4.0000KB  0.9922MB  9.222656GB  995.3093ms  Host To Device
+   43822  507.82KB  4.0000KB  2.0000MB  21.22266GB   1.809332s  Device To Host
+   53365         -         -         -           -   8.992308s  Gpu page fault groups
+Total CPU Page faults: 21124

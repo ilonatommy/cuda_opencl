@@ -1,0 +1,31 @@
+Copy input data from the host memory to the CUDA device
+CUDA kernel launch with 1 blocks of 1024 threads
+Copy output data from the CUDA device to the host memory
+Test PASSED
+Done
+==21693== Profiling application: ./v2
+==21693== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   99.48%  537.32us         2  268.66us  2.4320us  534.88us  [CUDA memcpy HtoD]
+                    0.30%  1.6320us         1  1.6320us  1.6320us  1.6320us  [CUDA memcpy DtoH]
+                    0.22%  1.1840us         1  1.1840us  1.1840us  1.1840us  vectorAdd(float const *, float const *, float*, int)
+      API calls:   99.41%  310.49ms         3  103.50ms  18.717us  310.44ms  cudaMallocManaged
+                    0.24%  734.31us         3  244.77us  32.686us  667.19us  cudaMemcpy
+                    0.17%  515.64us         1  515.64us  515.64us  515.64us  cuDeviceTotalMem
+                    0.10%  310.31us        96  3.2320us     838ns  98.756us  cuDeviceGetAttribute
+                    0.06%  176.28us         3  58.760us  22.559us  100.15us  cudaFree
+                    0.01%  41.206us         1  41.206us  41.206us  41.206us  cuDeviceGetName
+                    0.01%  40.020us         1  40.020us  40.020us  40.020us  cudaLaunchKernel
+                    0.00%  10.057us         1  10.057us  10.057us  10.057us  cuDeviceGetPCIBusId
+                    0.00%  3.9810us         3  1.3270us     908ns  1.8160us  cuDeviceGetCount
+                    0.00%  3.0730us         1  3.0730us  3.0730us  3.0730us  cudaGetLastError
+                    0.00%  2.6540us         2  1.3270us     908ns  1.7460us  cuDeviceGet
+                    0.00%  1.1870us         1  1.1870us  1.1870us  1.1870us  cuDeviceGetUuid
+
+==21693== Unified Memory profiling result:
+Device "GeForce GTX 1060 6GB (0)"
+   Count  Avg Size  Min Size  Max Size  Total Size  Total Time  Name
+       2  32.000KB  4.0000KB  60.000KB  64.00000KB  6.464000us  Device To Host
+       1         -         -         -           -  531.2640us  Gpu page fault groups
+Total CPU Page faults: 1
+ 
