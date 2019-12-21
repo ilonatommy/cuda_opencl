@@ -1,5 +1,0 @@
-Macierze o dowolnym rozmiarze są generowane i wyświetlane, działa też kod do testowania, bo dla pierwszego wiersza daje dobre wyniki. Jednak macierz wynikowa ma 0.0000 w każdym innym wierszu niż pierwszy. Może to być wina:
-- kodu mnożenia w kernelu, ale jest taki jak na wykładzie
-- nieprawidłowej ilości wątków, ale nawet gdy jest ich wystarczająco dużo problem występuje
-- nieprawidłowego skopiowania danych z GPU, ale użyty sposób jest zaczerpnięty z wykładu
-- nie mam więcej pomysłów.
