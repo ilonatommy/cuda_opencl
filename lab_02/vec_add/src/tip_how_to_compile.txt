@@ -1,0 +1,6 @@
+nvcc -o test vectorAdd.cu -I../../include -I/home/cuda-s01/cuda_installation/NVIDIA_CUDA-10.0_Samples/common/inc -lcublas -lm 
+
+command to make a file .cu compile, in a case when includes cannot be found
+after compilation you can run the exec file (in our case test) by executing the command:
+
+./test
