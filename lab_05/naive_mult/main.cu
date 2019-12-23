@@ -149,9 +149,9 @@ int main(void)
 	} else printf("Copying successful.\n");
     
     //==========================TEST===============================================
-	PrintMatrix(M_h, matrix_size);
-	PrintMatrix(N_h, matrix_size);
-	PrintMatrix(P_h, matrix_size);	
+	//PrintMatrix(M_h, matrix_size);
+	//PrintMatrix(N_h, matrix_size);
+	//PrintMatrix(P_h, matrix_size);	
 
 	for(int i = 0; i < matrix_size; i++)
 	{

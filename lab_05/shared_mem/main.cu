@@ -4,51 +4,54 @@
  *  Created on: Nov 14, 2019
  *      Author: cuda-s01
  */
+
+const int WIDTH = 10;
+
 #include <stdio.h>
-__global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Width) {
-	// Calculate the row index of the P element and M
-	int Row = blockIdx.y*blockDim.y+threadIdx.y;
-	// Calculate the column index of P and N
-	int Col = blockIdx.x*blockDim.x+threadIdx.x;
+__global__ void matrixMultiplicationKernel(float* M, float* N, float* P) {
+    // Calculate the row index of the P element and M
+    int Row = blockIdx.y*blockDim.y+threadIdx.y;
+    // Calculate the column index of P and N
+    int Col = blockIdx.x*blockDim.x+threadIdx.x;
     
-    __shared__ float sum_M[TILE_WIDTH][TILE_WIDTH];
-	__shared__ float sum_N[TILE_WIDTH][TILE_WIDTH];
-	
-	s_M[threadIdx.y][threadIdx.x]=M[threadIdx.y][threadIdx.x];
-	s_N[threadIdx.y][threadIdx.x]=N[threadIdx.y][threadIdx.x];
-    
-    _syncthreads();
-    
+    __shared__ float s_M[WIDTH * WIDTH];
+    __shared__ float s_N[WIDTH * WIDTH];
+ 
 	//debug line:
 	//printf("Row:%d, Col:%d. BlockIdx(%d,%d), blockDim(%d,%d) threadIdx(%d,%d)\n\n",Row,Col,blockIdx.x,blockIdx.y,blockDim.x,blockDim.y,threadIdx.x,threadIdx.y);
-	if ((Row < Width) && (Col < Width)) {
-		float Pvalue = 0;
-		// each thread computes one element of the block sub-matrix
-		for (int k = 0; k < Width; ++k) {
-			Pvalue += s_M[Row*Width+k]*s_N[k*Width+Col];
-		}
-		P[Row*Width+Col] = Pvalue;
+     if ((Row < WIDTH) && (Col < WIDTH)) {
+         float Pvalue = 0;
+         
+         s_M[Row*WIDTH + Col] = M[Row*WIDTH + Col];
+         s_N[Row*WIDTH + Col] = N[Row*WIDTH + Col];
+         __syncthreads();
+
+	 // each thread computes one element of the block sub-matrix
+	 for (int k = 0; k < WIDTH; ++k) {
+	    Pvalue += s_M[Row*WIDTH+k]*s_N[k*WIDTH+Col];
 	}
-	else P[Row*Width+Col] =  99.9;
+	P[Row*WIDTH+Col] = Pvalue;
+      }
+      else P[Row*WIDTH+Col] =  99.9;
 }
 
-void matrixMultiplication(float *M, float *N, float *P, int Width){
+void matrixMultiplication(float *M, float *N, float *P){
 
     // declare the number of blocks per grid and the number of threads per block
-    int th = Width;
+    int th = WIDTH;
     int bl = 1;
     dim3 threadsPerBlock(th,th);
     dim3 blocksPerGrid(bl,bl);
     printf("Kernel started: %d blocks, %d threads.\n", bl, th);
-    matrixMultiplicationKernel<<<blocksPerGrid,threadsPerBlock>>>(M, N, P, Width);
+    matrixMultiplicationKernel<<<blocksPerGrid,threadsPerBlock>>>(M, N, P);
 }
 
-void PrintMatrix(float* M, int Width)
+void PrintMatrix(float* M)
 {
-	for(int i = 0; i < Width; i++)
+	for(int i = 0; i < WIDTH; i++)
 	{
-		for(int j = 0; j < Width; j++)
-			printf("%f  ",M[i*Width+j]);
+		for(int j = 0; j < WIDTH; j++)
+			printf("%f  ",M[i*WIDTH+j]);
 		printf("\n");
 	}
 	printf("\n");
@@ -59,7 +62,7 @@ int main(void)
 	printf("Starting the program:\n");
 	cudaError_t err = cudaSuccess;
 
-	int matrix_size = 10;
+	int matrix_size = WIDTH;
     	int num_of_elements = matrix_size * matrix_size;
 	size_t size = num_of_elements * sizeof(float);
 	printf("matrix [%d x %d] multiplication.\n", matrix_size, matrix_size);
@@ -140,7 +143,7 @@ int main(void)
 	} else printf("Copying successful.\n");
 	
     //calculations:
-    matrixMultiplication(M_d, N_d, P_d, matrix_size);
+    matrixMultiplication(M_d, N_d, P_d);
     err = cudaGetLastError();
     
     if(err != cudaSuccess)
@@ -158,9 +161,9 @@ int main(void)
 	} else printf("Copying successful.\n");
     
     //==========================TEST===============================================
-	PrintMatrix(M_h, matrix_size);
-	PrintMatrix(N_h, matrix_size);
-	PrintMatrix(P_h, matrix_size);	
+	PrintMatrix(M_h);
+	PrintMatrix(N_h);
+	PrintMatrix(P_h);	
 
 	for(int i = 0; i < matrix_size; i++)
 	{
