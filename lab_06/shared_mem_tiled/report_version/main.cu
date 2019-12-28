@@ -7,8 +7,9 @@
  */
 #include <stdio.h>
 #include <time.h>
+
 const int TILE_WIDTH = 2;
-const int MATRIX_SIZE = 8;
+const int MATRIX_SIZE =8;
 
 
 __global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Width) {
@@ -52,18 +53,36 @@ __global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Wid
 
 }
 
-void multiply(float mat1[][MATRIX_SIZE], float mat2[][MATRIX_SIZE], float res[][MATRIX_SIZE])
-{
-    int i, j, k;
-    for (i = 0; i < MATRIX_SIZE; i++)
-    {
-        for (j = 0; j < MATRIX_SIZE; j++)
-        {
-            res[i][j] = 0;
-            for (k = 0; k < MATRIX_SIZE; k++)
-                res[i][j] += mat1[i][k]*mat2[k][j];
+void multiply(float* M, float* N, float* P, int size) {
+    float X[size][size], Y[size][size], Z[size][size];
+    int i, j;
+
+    printf("Rewriting matrices\n");
+    for (i=0;i<size;i++) {
+        for (j=0;j<size;j++) {
+            X[i][j]=M[size*i+j];
+            Y[i][j]=N[size*i+j];
+            Z[i][j]=0;
         }
     }
+
+    // Multiplying first and second matrices and storing in Z.
+    for (i = 0; i < size; ++i) {
+        for (j = 0; j < size; ++j) {
+            for (int k = 0; k < size; ++k) {
+                Z[i][j] += X[i][k] * Y[k][j];
+            }
+    }
+    }
+    printf("Result matrix:\n");
+    for (i=0;i<size;i++) {
+        for (j=0;j<size;j++) {
+            P[size*i+j]=Z[i][j];
+        }
+    printf("\n");
+    }
+
+
 }
 
 void matrixMultiplication(float *M, float *N, float *P, int Width){
@@ -158,6 +177,7 @@ int main(void)
         } else printf("Kernel operations successful. Time elapsed: %lf s.\n", time_elapsed);
 
 
+
     //==========================TEST===============================================
         PrintMatrix(M, matrix_size);
         PrintMatrix(N, matrix_size);
@@ -181,10 +201,12 @@ int main(void)
                 }
         }
 
-    printf("Test PASSED\n");
+        printf("Test PASSED\n");
 
     //============================ Single-threaded approach ==========================
-        matrixSingleMultiplication(M, N, P);
+
+        multiply(M, N, P, MATRIX_SIZE);
+        PrintMatrix(P, matrix_size);
         printf("Now freeing memory.\n");
 
     // Free device global memory
@@ -216,6 +238,3 @@ int main(void)
     return 0;
 
 }
-
-
-

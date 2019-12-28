@@ -14,30 +14,30 @@ void PrintMatrix(int* M, int Width)
 }
 
 void multiply(int* M, int* N, int* P, int size) {
-    int X[S][S], Y[S][S], Z[S][S];
+    int X[size][size], Y[size][size], Z[size][size];
     int i, j;
 
     printf("Rewriting matrices\n");
-    for (i=0;i<S;i++) {
-        for (j=0;j<S;j++) {
-            X[i][j]=M[S*i+j];
-            Y[i][j]=N[S*i+j];
+    for (i=0;i<size;i++) {
+        for (j=0;j<size;j++) {
+            X[i][j]=M[size*i+j];
+            Y[i][j]=N[size*i+j];
             Z[i][j]=0;
         }
     }
     
     // Multiplying first and second matrices and storing in Z.
-    for (i = 0; i < S; ++i) {
-        for (j = 0; j < S; ++j) {
-            for (int k = 0; k < S; ++k) {
+    for (i = 0; i < size; ++i) {
+        for (j = 0; j < size; ++j) {
+            for (int k = 0; k < size; ++k) {
                 Z[i][j] += X[i][k] * Y[k][j];
             }
         }
     }
     printf("Result matrix:\n");
-    for (i=0;i<S;i++) {
-        for (j=0;j<S;j++) {
-            P[S*i+j]=Z[i][j];
+    for (i=0;i<size;i++) {
+        for (j=0;j<size;j++) {
+            P[size*i+j]=Z[i][j];
         }
         printf("\n");
     }
