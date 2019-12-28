@@ -1,10 +1,9 @@
-  GNU nano 2.3.1                                                                                                                                                                                                        File: main.cu                                                                                                                                                                                                                                                                                                                                                                                                            Modified  
 
- /*
+/*
  * main.cu
  *
  *  Created on: Nov 14, 2019
- *	Author: cuda-s01
+ *  Author: cuda-s01
  */
 #include <stdio.h>
 #include <time.h>
@@ -44,7 +43,7 @@ __global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Wid
                 __syncthreads();
 
         }
-	if(Row < Width && Col < Width)
+    if(Row < Width && Col < Width)
         {
                 P[Row * Width + Col]  = Pval;
                 //printf("(%d,%d)=%f\n",Row,Col,P[Row*Width+Col]);
@@ -58,7 +57,7 @@ void multiply(float mat1[][MATRIX_SIZE], float mat2[][MATRIX_SIZE], float res[][
     int i, j, k;
     for (i = 0; i < MATRIX_SIZE; i++)
     {
-     	for (j = 0; j < MATRIX_SIZE; j++)
+        for (j = 0; j < MATRIX_SIZE; j++)
         {
             res[i][j] = 0;
             for (k = 0; k < MATRIX_SIZE; k++)
@@ -86,9 +85,14 @@ void PrintMatrix(float* M, int Width)
                         printf("%f  ",M[i*Width+j]);
                 printf("\n");
         }
-	printf("\n");
+    printf("\n");
 }
 
+void matrixSingleMultiplication(float *M, float *N, float *P) {
+        printf("Single threaded multiplication happening\n");
+        PrintMatrix(M, MATRIX_SIZE);
+
+}
 
 
 int main(void)
@@ -100,10 +104,6 @@ int main(void)
         int num_of_elements = matrix_size * matrix_size;
         size_t size = num_of_elements * sizeof(float);
         printf("matrix [%d x %d] multiplication.\n", matrix_size, matrix_size);
-
-    //=====================Single-threaded approach==========================
-
-
 
     //==========================Shared Memory============================================
 
@@ -143,20 +143,21 @@ int main(void)
           N[i] = rand()/(float)RAND_MAX;
         }
     printf("Initialisation finished.\n");
- 
+
     //calculations:
     clock_t start=clock();
     matrixMultiplication(M, N, P, matrix_size);
     clock_t end=clock();
     double time_elapsed=((double) (end - start)) / CLOCKS_PER_SEC;
     err = cudaGetLastError();
- 
+
     if(err != cudaSuccess)
     {
                 fprintf(stderr, "Failed to launch kernel. Error: %s.\n", cudaGetErrorString(err));
                 exit(EXIT_FAILURE);
         } else printf("Kernel operations successful. Time elapsed: %lf s.\n", time_elapsed);
- 
+
+
     //==========================TEST===============================================
         PrintMatrix(M, matrix_size);
         PrintMatrix(N, matrix_size);
@@ -181,6 +182,10 @@ int main(void)
         }
 
     printf("Test PASSED\n");
+
+    //============================ Single-threaded approach ==========================
+        matrixSingleMultiplication(M, N, P);
+        printf("Now freeing memory.\n");
 
     // Free device global memory
     err = cudaFree(M);
@@ -211,12 +216,6 @@ int main(void)
     return 0;
 
 }
-
-
-
-
-
-
 
 
 
