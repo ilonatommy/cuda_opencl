@@ -186,9 +186,10 @@ int main(void)
 
 
     //==========================TEST===============================================
-        PrintMatrix(M, matrix_size);
-      PrintMatrix(N, matrix_size);
+    PrintMatrix(M, matrix_size);
+    PrintMatrix(N, matrix_size);
     PrintMatrix(P, matrix_size);
+    // DO NOT COMMENT THE PRINTING. Everything stops working if you do it. It's some sort of black magic.
 
         for(int i = 0; i < matrix_size; i++)
         {
