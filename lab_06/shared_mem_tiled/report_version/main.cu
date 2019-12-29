@@ -9,7 +9,7 @@
 #include <time.h>
 
 const int TILE_WIDTH = 2;
-const int MATRIX_SIZE =8;
+const int MATRIX_SIZE =32;
 
 
 __global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Width) {
@@ -57,7 +57,7 @@ void multiply(float* M, float* N, float* P, int size) {
     float X[size][size], Y[size][size], Z[size][size];
     int i, j;
 
-    printf("Rewriting matrices\n");
+//    printf("Rewriting matrices\n");
     for (i=0;i<size;i++) {
         for (j=0;j<size;j++) {
             X[i][j]=M[size*i+j];
@@ -74,12 +74,12 @@ void multiply(float* M, float* N, float* P, int size) {
             }
     }
     }
-    printf("Result matrix:\n");
+    //printf("Result matrix:\n");
     for (i=0;i<size;i++) {
         for (j=0;j<size;j++) {
             P[size*i+j]=Z[i][j];
         }
-    printf("\n");
+    //printf("\n");
     }
 
 
@@ -127,33 +127,41 @@ int main(void)
     //==========================Shared Memory============================================
 
         //allocate matrixes on the device:
-        printf("Started variables allocation for the device.\n");
-    printf("First matrix.\n");
+        printf("Allocating matrices on the device...\n");
+    // printf("First matrix.\n");
         float *M;
         err = cudaMallocManaged((void**)&M,  size);
         if(err != cudaSuccess)
         {
                 fprintf(stderr, "Failed to allocate M matrix!\n");
                 exit(EXIT_FAILURE);
-        } else printf("Allocation successful.\n");
+        } else printf("M Allocation successful.\n");
 
-    printf("Second matrix.\n");
+    // printf("Second matrix.\n");
         float *N;
         err = cudaMallocManaged((void**)&N,  size);
         if(err != cudaSuccess)
         {
                 fprintf(stderr, "Failed to allocate N matrix!\n");
                 exit(EXIT_FAILURE);
-        } else printf("Allocation successful.\n");
+        } else printf("N Allocation successful.\n");
 
-        printf("Third matrix.\n");
+        // printf("Third matrix.\n");
         float *P;
         err = cudaMallocManaged((void**)&P,  size);
         if(err != cudaSuccess)
         {
                 fprintf(stderr, "Failed to allocate P matrix!\n");
                 exit(EXIT_FAILURE);
-        } else printf("Allocation successful.\n");
+        } else printf("P Allocation successful.\n");
+
+        float *R;
+        err = cudaMallocManaged((void**)&R,  size);
+        if(err != cudaSuccess)
+        {
+                fprintf(stderr, "Failed to allocate R matrix!\n");
+                exit(EXIT_FAILURE);
+        } else printf("R Allocation successful.\n");
 
         //initialisation:
         for(int i=0; i<num_of_elements; i++)
@@ -177,11 +185,10 @@ int main(void)
         } else printf("Kernel operations successful. Time elapsed: %lf s.\n", time_elapsed);
 
 
-
     //==========================TEST===============================================
         PrintMatrix(M, matrix_size);
-        PrintMatrix(N, matrix_size);
-        PrintMatrix(P, matrix_size);
+      PrintMatrix(N, matrix_size);
+    PrintMatrix(P, matrix_size);
 
         for(int i = 0; i < matrix_size; i++)
         {
@@ -194,20 +201,33 @@ int main(void)
                         //printf("%f ",tmp);
                         if(fabs(tmp - P[i*matrix_size + j]) > 1e-3)
                         {
-                                fprintf(stderr, "Verification test failed.!\nElement at index (%d, %d) should be %f, but is %f. \n",
+                                fprintf(stderr, "Verification test failed!\nElement at index (%d, %d) should be %f, but is %f. \n",
                                         i,j,tmp,P[i*matrix_size + j]);
                                 exit(EXIT_FAILURE);
                         }
                 }
         }
 
-        printf("Test PASSED\n");
+    printf("Verification test PASSED, multi-threaded calculations are correct.\n");
 
     //============================ Single-threaded approach ==========================
 
-        multiply(M, N, P, MATRIX_SIZE);
-        PrintMatrix(P, matrix_size);
-        printf("Now freeing memory.\n");
+    start=clock();
+    multiply(M, N, R, MATRIX_SIZE);
+    end=clock();
+    time_elapsed=end-start;
+
+    printf("Time elapsed for single-threaded calculations: %lf s.\n", time_elapsed);
+
+    PrintMatrix(R, matrix_size);
+    // bool isMatrixValid=True;
+    // for (i=0;i<matrix_size;i++) {
+    //     for (j=0;j<matrix_size;j++) {
+    //         if (P[i][j]==)
+    //     }
+    // }
+
+    printf("Freeing memory...\n");
 
     // Free device global memory
     err = cudaFree(M);
@@ -234,7 +254,7 @@ int main(void)
         exit(EXIT_FAILURE);
     }
 
-    printf("Done\n");
+    printf("Memory freed successfully.\n");
     return 0;
 
 }
