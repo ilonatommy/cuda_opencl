@@ -1,0 +1,41 @@
+Multiplicating matrix 32 x 32.
+Kernel operations successful. Time elapsed: 0.000000 s.
+Verification test PASSED, multi-threaded calculations are correct.
+Comparision test PASSED, single-threaded calculations are correct.
+Time elapsed for single-threaded calculations: 0.000000 s.
+
+Multiplicating matrix 64 x 64.
+Kernel operations successful. Time elapsed: 0.000000 s.
+Verification test PASSED, multi-threaded calculations are correct.
+Comparision test PASSED, single-threaded calculations are correct.
+Time elapsed for single-threaded calculations: 0.000000 s.
+
+Multiplicating matrix 128 x 128.
+Kernel operations successful. Time elapsed: 0.000000 s.
+Verification test PASSED, multi-threaded calculations are correct.
+Comparision test PASSED, single-threaded calculations are correct.
+Time elapsed for single-threaded calculations: 0.010000 s.
+
+Multiplicating matrix 256 x 256.
+Kernel operations successful. Time elapsed: 0.000000 s.
+Verification test PASSED, multi-threaded calculations are correct.
+Comparision test PASSED, single-threaded calculations are correct.
+Time elapsed for single-threaded calculations: 0.120000 s.
+
+Multiplicating matrix 512 x 512.
+Kernel operations successful. Time elapsed: 0.000000 s.
+Verification test PASSED, multi-threaded calculations are correct.
+Comparision test PASSED, single-threaded calculations are correct.
+Time elapsed for single-threaded calculations: 0.840000 s.
+
+Multiplicating matrix 600 x 600.
+Kernel operations successful. Time elapsed: 0.000000 s.
+Verification test PASSED, multi-threaded calculations are correct.
+Comparision test PASSED, single-threaded calculations are correct.
+Time elapsed for single-threaded calculations: 0.900000 s.
+
+Multiplicating matrix 800 x 800.
+Kernel operations successful. Time elapsed: 0.000000 s.
+Verification test PASSED, multi-threaded calculations are correct.
+Comparision test PASSED, single-threaded calculations are correct.
+Time elapsed for single-threaded calculations: 2.290000 s.

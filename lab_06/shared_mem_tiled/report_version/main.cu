@@ -1,16 +1,14 @@
-
 /*
  * main.cu
  *
  *  Created on: Nov 14, 2019
- *  Author: cuda-s01
+ *	Author: cuda-s01
  */
 #include <stdio.h>
 #include <time.h>
 
 const int TILE_WIDTH = 2;
-const int MATRIX_SIZE =32;
-
+const int MATRIX_SIZE = 800;
 
 __global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Width) {
         // Calculate the row index of the P element and M
@@ -44,20 +42,18 @@ __global__ void matrixMultiplicationKernel(float* M, float* N, float* P, int Wid
                 __syncthreads();
 
         }
-    if(Row < Width && Col < Width)
+	if(Row < Width && Col < Width)
         {
                 P[Row * Width + Col]  = Pval;
                 //printf("(%d,%d)=%f\n",Row,Col,P[Row*Width+Col]);
         }
-
-
 }
 
 void multiply(float* M, float* N, float* P, int size) {
     float X[size][size], Y[size][size], Z[size][size];
     int i, j;
 
-//    printf("Rewriting matrices\n");
+    // Rewriting matrices
     for (i=0;i<size;i++) {
         for (j=0;j<size;j++) {
             X[i][j]=M[size*i+j];
@@ -72,14 +68,13 @@ void multiply(float* M, float* N, float* P, int size) {
             for (int k = 0; k < size; ++k) {
                 Z[i][j] += X[i][k] * Y[k][j];
             }
+	   }
     }
-    }
-    //printf("Result matrix:\n");
+    
     for (i=0;i<size;i++) {
         for (j=0;j<size;j++) {
             P[size*i+j]=Z[i][j];
         }
-    //printf("\n");
     }
 
 
@@ -104,15 +99,8 @@ void PrintMatrix(float* M, int Width)
                         printf("%f  ",M[i*Width+j]);
                 printf("\n");
         }
-    printf("\n");
+	printf("\n");
 }
-
-void matrixSingleMultiplication(float *M, float *N, float *P) {
-        printf("Single threaded multiplication happening\n");
-        PrintMatrix(M, MATRIX_SIZE);
-
-}
-
 
 int main(void)
 {
@@ -122,13 +110,15 @@ int main(void)
         int matrix_size = MATRIX_SIZE;
         int num_of_elements = matrix_size * matrix_size;
         size_t size = num_of_elements * sizeof(float);
-        printf("matrix [%d x %d] multiplication.\n", matrix_size, matrix_size);
+        FILE *fp;
+        fp=fopen("log.txt", "a");
+        fprintf(fp, "Multiplicating matrix %d x %d.\n", matrix_size, matrix_size);
 
     //==========================Shared Memory============================================
 
         //allocate matrixes on the device:
         printf("Allocating matrices on the device...\n");
-    // printf("First matrix.\n");
+        // printf("First matrix.\n");
         float *M;
         err = cudaMallocManaged((void**)&M,  size);
         if(err != cudaSuccess)
@@ -137,7 +127,7 @@ int main(void)
                 exit(EXIT_FAILURE);
         } else printf("M Allocation successful.\n");
 
-    // printf("Second matrix.\n");
+        // printf("Second matrix.\n");
         float *N;
         err = cudaMallocManaged((void**)&N,  size);
         if(err != cudaSuccess)
@@ -169,6 +159,7 @@ int main(void)
           M[i] = rand()/(float)RAND_MAX;
           N[i] = rand()/(float)RAND_MAX;
         }
+
     printf("Initialisation finished.\n");
 
     //calculations:
@@ -182,14 +173,13 @@ int main(void)
     {
                 fprintf(stderr, "Failed to launch kernel. Error: %s.\n", cudaGetErrorString(err));
                 exit(EXIT_FAILURE);
-        } else printf("Kernel operations successful. Time elapsed: %lf s.\n", time_elapsed);
+        } else fprintf(fp, "Kernel operations successful. Time elapsed: %lf s.\n", time_elapsed);
 
 
     //==========================TEST===============================================
     PrintMatrix(M, matrix_size);
     PrintMatrix(N, matrix_size);
     PrintMatrix(P, matrix_size);
-    // DO NOT COMMENT THE PRINTING. Everything stops working if you do it. It's some sort of black magic.
 
         for(int i = 0; i < matrix_size; i++)
         {
@@ -209,24 +199,34 @@ int main(void)
                 }
         }
 
-    printf("Verification test PASSED, multi-threaded calculations are correct.\n");
+	fprintf(fp, "Verification test PASSED, multi-threaded calculations are correct.\n");
 
-    //============================ Single-threaded approach ==========================
+    //======================== Single-threaded calculations =====================
 
     start=clock();
     multiply(M, N, R, MATRIX_SIZE);
     end=clock();
     time_elapsed=end-start;
 
-    printf("Time elapsed for single-threaded calculations: %lf s.\n", time_elapsed);
+    //============================ SINGLE-THREADED TEST ==========================
+    int isCorrect=1;
+    for(int i=0;i<matrix_size;i++) {
+        for (int j=0;j<matrix_size;j++) {
+                 if(fabs(P[i*matrix_size + j]-R[i*matrix_size+j]) > 1e-3) {
+                        isCorrect=0; }
+        }
+    }
+     	printf("%d", isCorrect);
+    if (isCorrect==1) {
+        fprintf(fp, "Comparision test PASSED, single-threaded calculations are correct.\n");
+    } else {
+	    fprintf(fp, "Comparision test failed, matrices are not identical");
+    }
 
+
+    fprintf(fp, "Time elapsed for single-threaded calculations: %lf s.\n\n", time_elapsed/CLOCKS_PER_SEC);
+    fclose(fp);
     PrintMatrix(R, matrix_size);
-    // bool isMatrixValid=True;
-    // for (i=0;i<matrix_size;i++) {
-    //     for (j=0;j<matrix_size;j++) {
-    //         if (P[i][j]==)
-    //     }
-    // }
 
     printf("Freeing memory...\n");
 
@@ -235,7 +235,7 @@ int main(void)
 
     if (err != cudaSuccess)
     {
-        fprintf(stderr, "Failed to free device matrix M (error code %s)!\n", cudaGetErrorString(err));
+     	fprintf(stderr, "Failed to free device matrix M (error code %s)!\n", cudaGetErrorString(err));
         exit(EXIT_FAILURE);
     }
 
@@ -243,7 +243,7 @@ int main(void)
 
     if (err != cudaSuccess)
     {
-        fprintf(stderr, "Failed to free device matrix N (error code %s)!\n", cudaGetErrorString(err));
+     	fprintf(stderr, "Failed to free device matrix N (error code %s)!\n", cudaGetErrorString(err));
         exit(EXIT_FAILURE);
     }
 
@@ -251,7 +251,7 @@ int main(void)
 
     if (err != cudaSuccess)
     {
-        fprintf(stderr, "Failed to free device matrix P (error code %s)!\n", cudaGetErrorString(err));
+     	fprintf(stderr, "Failed to free device matrix P (error code %s)!\n", cudaGetErrorString(err));
         exit(EXIT_FAILURE);
     }
 
@@ -259,3 +259,4 @@ int main(void)
     return 0;
 
 }
+
