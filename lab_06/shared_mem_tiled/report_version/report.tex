@@ -1,0 +1,57 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage[british,UKenglish,USenglish,english,american]{babel}
+\usepackage{tocbibind}
+\usepackage[toc,page]{appendix}
+
+%--------------dodatkowe pakiety:-----------
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{array}
+
+%-------------------links------------------
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+ 
+\urlstyle{same}
+%------placing image caption at the bottom---------
+\usepackage{floatrow}
+%--------------allows pic alligning----------------
+\usepackage[export]{adjustbox}
+%----------------for console output-----------------
+\usepackage{listings}
+
+\begin{document}
+
+\title{Introduction to CUDA and OpenCL: Shared memory operations}
+\author{Ilona Tomkowicz, Zofia Pieńkowska}
+
+\maketitle
+\tableofcontents
+\newpage
+%--------------------------------------------------------------------
+
+\section{Exercise goal}
+The goal of this exercise was to implement matrix multiplication algorithm and compare calculation times for single-threaded computations and multi-threaded computations using shared memory. CuBLAS toolkit could have not been imported due to lack of necessary dependencies.
+
+\section{Implementation}
+
+\section{Shared memory approach}
+
+
+\subsection{Single-threaded approach}
+A simple algorythm of matrix multiplication has been implemented. Its calculations have been significantly slower than those performed on multiple threads. The matrix size has been gradually increased and resulted in segmentation fault at size 850x850.
+
+\subsection{Obtained logs}
+Two tests have been conducted during the execution. The first test was checking whether all elements of matrix have been calculated correctly by the multi-threaded algorythm. If this test had passed, the second
+
+\section{Conclusion}
+
+\end{document}
